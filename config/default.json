@@ -1,0 +1,5 @@
+{
+    "port": 5000,
+    "jwtSecret": "mila diplom",
+    "mongoUri": "mongodb+srv://mila:1111@cluster0.e1ep0.mongodb.net/test?retryWrites=true&w=majority"
+}
