@@ -30,7 +30,7 @@ const Header = (props) => {
             <NavLink to="createtest">Створити тест</NavLink>
           </li>
           <li>
-            <NavLink onClick={() => {props.onAuth()}} to="userlist">Список користувачів</NavLink>
+            <NavLink /*onClick={() => {props.onAuth()}}*/ to="userlist">Список користувачів</NavLink>
           </li>
           <li>
             <a href="/" onClick={logoutHandler}>

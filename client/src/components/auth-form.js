@@ -36,7 +36,7 @@ const AuthForm = () => {
 
   return (
     <div className="auth-page">
-      <div className=" auth-form card blue darken-3">
+      <div className=" auth-form">
         <div className="card-content white-text">
           <span className="card-title">Авторизація</span>
 

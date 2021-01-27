@@ -17,7 +17,7 @@ const MainPage = () => {
     <div>
       {auth}
       <div className="image">
-        <Header onAuth={setIsAuthPage(true)}/>
+        <Header /*onAuth={setIsAuthPage(true)}*//>
         <div className="row cards">
           <div className="col s4">
             <div className="card">
