@@ -20,7 +20,7 @@ async function start () {
     } catch (error) {
         console.log('Server Error', error.message)
         process.exit(1);
-    }
+    } 
 }
 
 start();

@@ -5,6 +5,7 @@ import { AuthContext } from "./context/auth-context";
 import { useRoutes } from "./routes";
 import { useAuth } from "./hooks/auth.hook";
 
+
 function App() {
   const { token, login, logout, userId } = useAuth();
   const isAuthenticated = !!token;
@@ -20,10 +21,8 @@ function App() {
       }}
     >
       <Router>
-      <div className="image">
         
-        {routes}
-      </div>
+          {routes}
       </Router>
     </AuthContext.Provider>
   );

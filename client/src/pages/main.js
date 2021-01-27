@@ -1,23 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import testPen from "../images/testPen.jpg";
 import testWoman from "../images/testinWoman.png";
 import makingTest from "../images/makingTest.jpg";
 
-import Header from "../components/header";
-import AuthForm from "../components/auth-form";
-
 const MainPage = () => {
-  const [isAuthPage, setIsAuthPage] = useState(true);
-  let auth = null;
-  if (isAuthPage) {
-    auth = <AuthForm />;
-  }
-  console.log(isAuthPage);
   return (
     <div>
-      {auth}
-      <div className="image">
-        <Header /*onAuth={setIsAuthPage(true)}*//>
+      <div>
         <div className="row cards">
           <div className="col s4">
             <div className="card">
@@ -37,7 +26,7 @@ const MainPage = () => {
           <div className="col s3">
             <div className="card">
               <div className="card-image">
-                <img src={makingTest}  alt="makingTest"/>
+                <img src={makingTest} alt="makingTest" />
               </div>
               <div className="card-content">
                 <p>
@@ -53,7 +42,7 @@ const MainPage = () => {
           <div className="col s4">
             <div className="card">
               <div className="card-image">
-                <img src={testWoman} alt="testWoman"/>
+                <img src={testWoman} alt="testWoman" />
               </div>
               <div className="card-content">
                 <p>
@@ -67,8 +56,6 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      
-      {auth}
     </div>
   );
 };
