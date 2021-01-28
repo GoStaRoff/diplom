@@ -9,7 +9,7 @@ const Header = (props) => {
   const logoutHandler = (event) => {
     event.preventDefault();
     auth.logout();
-    history.push("/");
+    history.push("/login");
   };
   if (props.isAuth) {
     return (
@@ -18,16 +18,16 @@ const Header = (props) => {
           <NavLink className="brand-logo logo-text" to="main">Just test</NavLink>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
-              <NavLink to="profile">Профіль</NavLink>
+              <NavLink to="/profile">Профіль</NavLink>
             </li>
             <li>
-              <NavLink to="testlist">Список тестів</NavLink>
+              <NavLink to="/testlist">Список тестів</NavLink>
             </li>
             <li>
-              <NavLink to="createtest">Створити тест</NavLink>
+              <NavLink to="/createtest">Створити тест</NavLink>
             </li>
             <li>
-              <NavLink /*onClick={() => {props.onAuth()}}*/ to="userlist">
+              <NavLink to="/userlist">
                 Список користувачів
               </NavLink>
             </li>
@@ -50,7 +50,7 @@ const Header = (props) => {
           </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
-              <NavLink to="login">Увійти в систему</NavLink>
+              <NavLink to="/login">Увійти в систему</NavLink>
             </li>
           </ul>
         </div>

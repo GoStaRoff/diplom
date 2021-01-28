@@ -4,12 +4,17 @@ import "materialize-css";
 import { AuthContext } from "./context/auth-context";
 import { useRoutes } from "./routes";
 import { useAuth } from "./hooks/auth.hook";
-
+import Loader from "./components/loader";
 
 function App() {
-  const { token, login, logout, userId } = useAuth();
+  const { token, login, logout, userId, ready} = useAuth();
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
+
+  if(!ready){
+    return <Loader />
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -20,10 +25,7 @@ function App() {
         isAuthenticated,
       }}
     >
-      <Router>
-        
-          {routes}
-      </Router>
+      <Router>{routes}</Router>
     </AuthContext.Provider>
   );
 }

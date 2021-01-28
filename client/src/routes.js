@@ -23,14 +23,13 @@ export const useRoutes = (isAuthenticated) => {
           <Route path="/createtest" exact>
             <CreateTest />
           </Route>
-          <Route path="/userlist" exact>
+          <Route path="/userlist/:id" exact>
             <UserList />
           </Route>
           <Route path="/main" exact>
             <MainPage />
           </Route>
-          <Route path="/detail/:id"></Route>
-          <Redirect to="/" />
+          <Redirect to="/profile" />
         </Switch>
       </div>
     );

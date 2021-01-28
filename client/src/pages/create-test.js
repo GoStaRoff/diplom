@@ -1,13 +1,17 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
 import { useHistory } from "react-router-dom";
 
 const CreateTest = () => {
-    const history = useHistory();
+  const history = useHistory();
   const auth = useContext(AuthContext);
-  const [link, setLink] = useState("");
   const { request } = useHttp();
+  const [link, setLink] = useState("");
+
+  useEffect(() => {
+    window.M.updateTextFields();
+  }, []);
 
   const pressHandler = async (event) => {
     if (event.key === "Enter") {
@@ -20,7 +24,7 @@ const CreateTest = () => {
             Authorization: `Bearer ${auth.token}`,
           }
         );
-        history.push('/userlist/' + data.link._id)
+        history.push(`/userlist/${data.link._id}`);
       } catch (e) {}
     }
   };
