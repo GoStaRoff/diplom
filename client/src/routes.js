@@ -30,7 +30,7 @@ export const useRoutes = (isAuthenticated) => {
             <MainPage />
           </Route>
           <Route path="/detail/:id"></Route>
-          <Redirect to="/profile" />
+          <Redirect to="/" />
         </Switch>
       </div>
     );
