@@ -42,18 +42,7 @@ const AuthForm = () => {
 
   return (
     <div>
-      <nav className="reg-nav">
-        <div className="nav-wrapper">
-          <a href="/" className="brand-logo logo-text">
-            Just test
-          </a>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li>
-              <NavLink to="login">Увійти в систему</NavLink>
-            </li>
-          </ul>
-        </div>
-      </nav>
+     
       <div className="auth-page">
         <div className=" auth-form">
           <div className="card-content white-text">
@@ -101,6 +90,18 @@ const AuthForm = () => {
           </div>
         </div>
       </div>
+      <nav className="reg-nav">
+        <div className="nav-wrapper">
+          <a href="/" className="brand-logo logo-text">
+            Just test
+          </a>
+          <ul id="nav-mobile" className="right hide-on-med-and-down">
+            <li>
+              <NavLink to="login">Увійти в систему</NavLink>
+            </li>
+          </ul>
+        </div>
+      </nav>
     </div>
   );
 };
