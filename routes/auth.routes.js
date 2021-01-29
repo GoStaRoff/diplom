@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const bcrypt = require("bcrypt");
-const config = require('config');
+const config = require("config");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
@@ -11,7 +11,9 @@ router.post(
   "/register",
   [
     check("email", "Пошта вказана не вірно.").isEmail(),
-    check("password", "Мінімальна довжина паролю 6 символів").isLength({ min: 6 }),
+    check("password", "Мінімальна довжина паролю 6 символів").isLength({
+      min: 6,
+    }),
   ],
   async (req, res) => {
     try {
@@ -25,14 +27,18 @@ router.post(
       const { email, password } = req.body;
       const candidate = await User.findOne({ email });
       if (candidate) {
-        return res.status(400).json({ message: "Користувач вже зареєстрований" });
+        return res
+          .status(400)
+          .json({ message: "Користувач вже зареєстрований" });
       }
       const hashedPassword = await bcrypt.hash(password, 12);
-    await new User({ email, password: hashedPassword }).save();
- 
+      await new User({ email, password: hashedPassword }).save();
+
       res.status(201).json({ message: "Користувач зареєстрований успішно." });
     } catch (error) {
-      res.status(500).json({ message: "Щось пішло не так. Помилка серверу : " + error });
+      res
+        .status(500)
+        .json({ message: "Щось пішло не так. Помилка серверу : " + error });
     }
   }
 );
@@ -61,15 +67,19 @@ router.post(
       }
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: "Не вірний пароль. Спробуйте знову" });
+        return res
+          .status(400)
+          .json({ message: "Не вірний пароль. Спробуйте знову" });
       }
 
       const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
         expiresIn: "1h",
       });
-      res.json({token, userId: user.id});
+      res.json({ token, userId: user.id });
     } catch (error) {
-      res.status(500).json({ message: "Щось пішло не так. Помилка серверу : " + error });
+      res
+        .status(500)
+        .json({ message: "Щось пішло не так. Помилка серверу : " + error });
     }
   }
 );

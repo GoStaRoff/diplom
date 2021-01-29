@@ -4,8 +4,10 @@ const schema = new Schema({
     password: {type: String, required: true},
     login: {type: String, required: true, default: "newUser"},
     userType: {type: String, required: true, default: "user"},
+    surname: {type: String, default: "surname"},
+    
     testHistory: {type: Array},
-    links: [{type: Types.ObjectId, ref: 'Link'}]
+    userList: { type: Types.ObjectId, ref: 'User'},
 });
 
 module.exports = model('User', schema);

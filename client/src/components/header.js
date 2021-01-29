@@ -15,7 +15,7 @@ const Header = (props) => {
     return (
       <nav>
         <div className="nav-wrapper">
-          <NavLink className="brand-logo logo-text" to="main">Just test</NavLink>
+          <NavLink className="brand-logo logo-text" to="/main">Just test</NavLink>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
               <NavLink to="/profile">Профіль</NavLink>

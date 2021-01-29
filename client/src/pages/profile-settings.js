@@ -1,72 +1,46 @@
-import React, {useEffect} from "react";
-import userPhoto from "../images/user.png";
+import React, { useState, useContext, useCallback, useEffect } from "react";
+import { useHttp } from "../hooks/http.hook";
+import { AuthContext } from "../context/auth-context";
+import Loader from "../components/loader";
+import ProfileForm from "../components/pofile-form";
 
 const ProfileSetting = () => {
+  const [user, setUser] = useState(null);
+  const [links, setLinks] = useState([]);
+  const { loading, request } = useHttp();
+  const { token } = useContext(AuthContext);
+
+  const fetchUser = useCallback(async () => {
+    try {
+      const fetched = await request("/api/user", "GET", null, {
+        Authorization: `Bearer ${token}`,
+      });
+      setUser(fetched);
+    } catch (e) {}
+  }, [token, request]);
+
+  const fetchLinks = useCallback(async () => {
+    try {
+      const fetched = await request('/api/link', 'GET', null, {
+        Authorization: `Bearer ${token}`
+      })
+      setLinks(fetched)
+    } catch (e) {}
+  }, [token, request])
 
   useEffect(() => {
-    window.M.updateTextFields();
-  }, []);
-  
-  return (
-    <div>
-      
-      <div className="row profile-card">
-        <div className="col s12 m4 info-form">
-          <img className="userPhoto" src={userPhoto} alt="userPhoto" />
-          <div className="input-field">
-            <input
-              disabled
-              value="admin"
-              id="disabled"
-              type="text"
-              className="validate"
-            />
-            <label htmlFor="disabled">User type</label>
-          </div>
-          <div className="input-field">
-            <input id="login" type="text" className="validate" />
-            <label htmlFor="login">Login</label>
-          </div>
-          <div className="input-field">
-            <input id="email" type="text" className="validate" />
-            <label htmlFor="email">Email</label>
-          </div>
-          <div className="input-field">
-            <input id="password" type="password" className="validate" />
-            <label htmlFor="password">Password</label>
-          </div>
-          <a href="/" className="waves-effect waves-light btn">Змінити інформацію</a>
-        </div>
-        <div className="col s12 m8 completed-tests">
-          <h4>Історія тестів</h4>
-          <div className="test">
-            <p>заговолокТесту</p>
-            <a href="/">Пройти тест</a>
-          </div>
-          <div className="test">
-            <p>заговолокТесту</p>
-            <a href="/">Пройти тест</a>
-          </div>
-          <div className="test">
-            <p>заговолокТесту</p>
-            <a href="/">Пройти тест</a>
-          </div>
-          <div className="test">
-            <p>заговолокТесту</p>
-            <a href="/">Пройти тест</a>
-          </div>
-          <div className="test">
-            <p>заговолокТесту</p>
-            <a href="/">Пройти тест</a>
-          </div>
-          <div className="test">
-            <p>заговолокТесту</p>
-            <a href="/">Пройти тест</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    fetchLinks()
+  }, [fetchLinks])
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  return <div>{!loading && user && <ProfileForm user={user} tests={links} />}</div>;
 };
 
 export default ProfileSetting;

@@ -73,6 +73,7 @@
   margin: auto;
   margin-top: 30px;
   margin-bottom: 20px;
+  padding-bottom: 20px;
   width: 70%;
   border-radius: 50px;
   text-align: center;
@@ -81,6 +82,7 @@
 .userPhoto {
   max-width: 150px;
   max-height: 150px;
+  margin-top: 20px;
 }
 
 .completed-tests {
@@ -112,7 +114,7 @@
   color: rgb(201, 130, 0);
 }
 
-.loader{
+.loader {
   display: flex;
   justify-content: center;
   padding-top: 20%;
