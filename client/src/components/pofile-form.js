@@ -4,7 +4,7 @@ import { AuthContext } from "../context/auth-context";
 import userPhoto from "../images/user.png";
 import adminPhoto from "../images/admin.png";
 import psychologyPhoto from "../images/psychology.png";
-
+  
 export const ProfileForm = ({ user, tests }) => {
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
@@ -32,8 +32,8 @@ export const ProfileForm = ({ user, tests }) => {
 
   useEffect(() => {
     window.M.updateTextFields();
-    console.log(user)
-    console.log(tests)
+    console.log(user);
+    console.log(tests);
   }, [user, tests]);
 
   const changeHandler = (event) => {
@@ -54,7 +54,7 @@ export const ProfileForm = ({ user, tests }) => {
   };
 
   return (
-    <div className="row profile-card">
+    <div className="row page-card">
       <div className="col s12 m4 info-form">
         <img className="userPhoto" src={profilePhoto} alt="userPhoto" />
         <div className="input-field">
@@ -117,7 +117,9 @@ export const ProfileForm = ({ user, tests }) => {
           return (
             <div className="test" key={test._id}>
               <p>{test.to}</p>
-              <a target="_blank" rel="noopener noreferrer" href={test.from}>{test.from}</a>
+              <a target="_blank" rel="noopener noreferrer" href={test.from}>
+                {test.from}
+              </a>
             </div>
           );
         })}

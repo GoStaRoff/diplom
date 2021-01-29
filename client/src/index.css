@@ -67,7 +67,11 @@
   color: white;
 }
 
-.profile-card {
+.test-list{
+  border-radius: 25px !important;
+}
+
+.page-card {
   background-color: rgba(255, 255, 255, 0.8);
   border: 2px solid wheat;
   margin: auto;
@@ -95,7 +99,7 @@
 }
 
 .test {
-  background-color: rgba(0, 102, 255, 0.1);
+  background-color: rgba(0, 121, 85, 0.1);
   padding: 15px;
   padding-top: 1px;
   width: 100%;

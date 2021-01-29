@@ -7,6 +7,7 @@ export const LinksList = ({ links }) => {
     return <p className="center">isEmpty</p>;
   }
   return (
+    <div className="row page-card test-list">
     <table className="highlight">
       <thead>
         <tr>
@@ -30,6 +31,7 @@ export const LinksList = ({ links }) => {
         })}
       </tbody>
     </table>
+    </div>
   );
 };
 
