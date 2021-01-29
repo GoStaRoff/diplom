@@ -113,7 +113,7 @@ export const ProfileForm = ({ user, tests }) => {
       </div>
       <div className="col s12 m8 completed-tests">
         <h4>Історія тестів</h4>
-        {tests.map((test, index) => {
+        {tests.map((test) => {
           return (
             <div className="test" key={test._id}>
               <p>{test.to}</p>

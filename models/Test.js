@@ -1,6 +1,7 @@
 const { Schema, model, Types } = require("mongoose");
 const schema = new Schema({
   name: { type: String, required: true },
+  description : { type:String, default:"Опис"},
   owner: { type: String, required: true },
   subscribesList: { type: Array, ref: "User" },
   questionsList: { type: Array, required: true },

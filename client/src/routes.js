@@ -20,7 +20,7 @@ export const useRoutes = (isAuthenticated) => {
           <Route path="/testlist" exact>
             <TestList />
           </Route>
-          <Route path="/createtest" exact>
+          <Route path="/testlist/createtest" exact>
             <CreateTest />
           </Route>
           <Route path="/userlist/:id" exact>
