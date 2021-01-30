@@ -7,7 +7,7 @@
   margin: auto;
   top: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0%;
   left: 0;
 }
 
@@ -67,7 +67,7 @@
   color: white;
 }
 
-.test-list{
+.test-list {
   border-radius: 25px !important;
 }
 
@@ -80,7 +80,20 @@
   padding-bottom: 20px;
   width: 70%;
   border-radius: 50px;
+}
+
+.page-card h4 {
   text-align: center;
+}
+
+.type-test{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.type-test span{ 
+  font-size: 18px !important;
 }
 
 .userPhoto {
@@ -99,7 +112,7 @@
 }
 
 .test {
-  background-color: rgba(0, 121, 85, 0.1);
+  background-color: rgb(255, 255, 255);
   padding: 15px;
   padding-top: 1px;
   width: 100%;
@@ -118,7 +131,7 @@
   color: rgb(201, 130, 0);
 }
 
-.create-test-btn{
+.create-test-btn {
   margin: auto;
   margin-top: 30px;
 }
@@ -131,4 +144,41 @@
   position: absolute;
   height: 100%;
   width: 100%;
+}
+
+.create-test-info {
+  padding-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid wheat;
+  border-top: 3px solid wheat;
+}
+
+.delete-btn{
+  height: 2rem;
+  width: 2.5rem;
+  padding: 0;
+}
+
+.add-question{
+  text-align: center;
+}
+
+.question{
+  margin-bottom: 40px;
+}
+
+.answer {
+  margin-left: 25px;
+}
+
+.create-completed-test button{
+  margin-bottom: 20px;
+  height:80px;
+  width: 300px;
+  font-size: 30px;
+}
+
+.create-completed-test, .change-profile{
+  width: 100%;
+  text-align: center;
 }

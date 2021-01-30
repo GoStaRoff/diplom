@@ -13,7 +13,7 @@ export const LinksList = ({ links }) => {
           <button
             className="btn waves-effect waves-light create-test-btn"
             name="createTest"
-          >Створити тест</button>
+          ><i class="large material-icons right">add_circle</i>Створити тест</button>
         </NavLink>
       </div>
       <div className="row page-card test-list">

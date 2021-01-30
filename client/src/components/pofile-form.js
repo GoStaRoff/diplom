@@ -4,7 +4,7 @@ import { AuthContext } from "../context/auth-context";
 import userPhoto from "../images/user.png";
 import adminPhoto from "../images/admin.png";
 import psychologyPhoto from "../images/psychology.png";
-  
+
 export const ProfileForm = ({ user, tests }) => {
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
@@ -102,14 +102,16 @@ export const ProfileForm = ({ user, tests }) => {
           />
           <label htmlFor="password">Password</label>
         </div>
-        <button
-          disabled={loading}
-          className="btn waves-effect waves-light"
-          name="infoChange"
-          onClick={infoChangeHandler}
-        >
-          Змінити інформацію
-        </button>
+        <div className="change-profile">
+          <button
+            disabled={loading}
+            className="btn waves-effect waves-light"
+            name="infoChange"
+            onClick={infoChangeHandler}
+          >
+            <i class="large material-icons right">send</i>Змінити інформацію
+          </button>
+        </div>
       </div>
       <div className="col s12 m8 completed-tests">
         <h4>Історія тестів</h4>
