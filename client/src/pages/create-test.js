@@ -74,7 +74,7 @@ const CreateTest = () => {
     setAnswers(newAnswers);
   };
 
-  const createTest = async() => {
+  const createTest = async () => {
     if (testName.length < 1) {
       message("Введіть назву теста");
       return;
@@ -87,24 +87,26 @@ const CreateTest = () => {
       message("Створіть хоча б одне запитання");
       return;
     }
-    questions.map((question) => {
-      if (question.length < 1) {
-        message("Заповніть всі поля для тексту запитання")
+    for (let i = 0; i < questions.length; i++) {
+      if (questions[i].length < 1) {
+        message("Заповніть всі поля для тексту запитання");
         return;
       }
-    });
-    answers.map((questionAnswers)=> {
-      if(questionAnswers.length < 2){
-        message("Створіть мінімум дві відповіді для питання")
+    }
+    for (let i = 0; i < answers.length; i++) {
+      if (answers[i].length < 2) {
+        message("Створіть мінімум дві відповіді для питання");
         return;
       }
-    })
-    answers.map((questionAnswers)=> questionAnswers.map((answer)=>{
-      if(answer.answer.length < 1){
-        message("Заповніть всі поля для тексту відповіді")
-        return
+    };
+    for (let i = 0; i < answers.length; i++) {
+      for(let j = 0; j < answers[i].length; j++){
+        if (answers[i][j].answer.length < 1) {
+          message("Заповніть всі поля для тексту відповіді");
+          return;
+        }
       }
-    }));
+    }
     const test = {
       name: testName,
       description: testDescription,
@@ -116,14 +118,14 @@ const CreateTest = () => {
     };
     try {
       const data = await request(
-        "/api/link/generate",
+        "/api/test/create",
         "POST",
-        { from: link },
+        { from: test },
         {
           Authorization: `Bearer ${auth.token}`,
         }
       );
-      history.push(`/userlist/${data.link._id}`);
+      history.push(`/testlist/${data.test._id}`);
     } catch (e) {}
   };
 

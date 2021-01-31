@@ -3,25 +3,25 @@ import React, { useState, useContext, useCallback, useEffect } from "react";
 import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
 import Loader from "../components/loader";
-import LinksList from "../components/links-list"
+import TestsList from "../components/test-list"
 
 const TestList = () => {
-    const [links, setLinks] = useState([])
+    const [tests, setTests] = useState([])
     const {loading, request} = useHttp()
     const {token} = useContext(AuthContext)
   
-    const fetchLinks = useCallback(async () => {
+    const fetchTests = useCallback(async () => {
       try {
-        const fetched = await request('/api/link', 'GET', null, {
+        const fetched = await request('/api/test', 'GET', null, {
           Authorization: `Bearer ${token}`
         })
-        setLinks(fetched)
+        setTests(fetched)
       } catch (e) {}
     }, [token, request])
   
     useEffect(() => {
-      fetchLinks()
-    }, [fetchLinks])
+      fetchTests()
+    }, [fetchTests])
   
     if (loading) {
       return <Loader/>
@@ -29,7 +29,7 @@ const TestList = () => {
   
     return (
       <>
-        {!loading && <LinksList links={links} />}
+        {!loading && <TestsList tests={tests} />}
       </>
     )
 };

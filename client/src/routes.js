@@ -15,7 +15,7 @@ export const useRoutes = (isAuthenticated) => {
         <Header isAuth={isAuthenticated} />
         <Switch>
           <Route path="/profile" exact>
-            <ProfileSetting />
+            <ProfileSetting isMe={true}/>
           </Route>
           <Route path="/testlist" exact>
             <TestList />
@@ -24,6 +24,9 @@ export const useRoutes = (isAuthenticated) => {
             <CreateTest />
           </Route>
           <Route path="/userlist/:id" exact>
+            <ProfileSetting isMe={false} />
+          </Route>
+          <Route path="/userlist" exact>
             <UserList />
           </Route>
           <Route path="/main" exact>

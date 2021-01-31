@@ -1,38 +1,33 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useContext, useCallback, useEffect } from "react";
+
 import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
 import Loader from "../components/loader";
-import LinkCard from "../components/link-card";
+import UsersList from "../components/user-list";
 
 const UserList = () => {
+  const [users, setUsers] = useState([]);
+  const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
-  const { request, loading } = useHttp();
-  const [link, setLink] = useState(null);
-  const linkId = useParams().id;
 
-  const getLink = useCallback(async () => {
+  const fetchUsers = useCallback(async () => {
     try {
-      const fetched = await request(`/api/link/${linkId}`, "GET", null, {
+      const fetched = await request("/api/user", "GET", null, {
         Authorization: `Bearer ${token}`,
       });
-      setLink(fetched);
+      setUsers(fetched);
     } catch (e) {}
-  }, [token, linkId, request]);
+  }, [token, request]);
 
   useEffect(() => {
-    getLink();
-  }, [getLink]);
+    fetchUsers();
+  }, [fetchUsers]);
 
-  if(loading){
-      return <Loader />
+  if (loading) {
+    return <Loader />;
   }
 
-  return (
-    <div>
-        {!loading && link && <LinkCard link={link} />}
-    </div>
-  );
+  return <>{!loading && <UsersList users={users} />}</>;
 };
 
 export default UserList;

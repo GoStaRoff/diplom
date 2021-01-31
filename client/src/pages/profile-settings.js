@@ -3,44 +3,63 @@ import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
 import Loader from "../components/loader";
 import ProfileForm from "../components/pofile-form";
+import {useParams} from 'react-router-dom'
 
-const ProfileSetting = () => {
+const ProfileSetting = ({isMe}) => {
   const [user, setUser] = useState(null);
   const [links, setLinks] = useState([]);
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
+  const userId = useParams().id;
 
-  const fetchUser = useCallback(async () => {
+
+  const fetchMe = useCallback(async () => {
     try {
-      const fetched = await request("/api/user", "GET", null, {
+      const fetched = await request("/api/user/me", "GET", null, {
         Authorization: `Bearer ${token}`,
       });
       setUser(fetched);
     } catch (e) {}
   }, [token, request]);
 
+  const fetchUser = useCallback(async () => {
+    try {
+      const fetched = await request(`/api/user/${userId}`, "GET", null, {
+        Authorization: `Bearer ${token}`,
+      });
+      setUser(fetched);
+    } catch (e) {}
+  }, [token, request, userId]);
+
   const fetchLinks = useCallback(async () => {
     try {
-      const fetched = await request('/api/link', 'GET', null, {
-        Authorization: `Bearer ${token}`
-      })
-      setLinks(fetched)
+      const fetched = await request("/api/link", "GET", null, {
+        Authorization: `Bearer ${token}`,
+      });
+      setLinks(fetched);
     } catch (e) {}
-  }, [token, request])
+  }, [token, request]);
 
   useEffect(() => {
-    fetchLinks()
-  }, [fetchLinks])
+    fetchLinks();
+  }, [fetchLinks]);
 
   useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+    if(isMe){
+      fetchMe();
+    }
+    else{
+      fetchUser();
+    }
+  }, [fetchUser, fetchMe, isMe]);
 
   if (loading) {
     return <Loader />;
   }
 
-  return <div>{!loading && user && <ProfileForm user={user} tests={links} />}</div>;
+  return (
+    <div>{!loading && user && <ProfileForm user={user} tests={links} />}</div>
+  );
 };
 
 export default ProfileSetting;

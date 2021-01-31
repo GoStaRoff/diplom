@@ -46,7 +46,7 @@ router.get("/", auth, async (req, res) => {
 // /api/link/:id
 router.get("/:id", auth, async (req, res) => {
   try {
-    const link = await Link.findById(req.params.id); //?????
+    const link = await Link.findById(req.params.id);
     res.json(link);
   } catch (e) {
     res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });

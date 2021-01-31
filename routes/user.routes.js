@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 const auth = require("../middleware/auth.middleware");
 const router = Router();
 
-// /api/user
-router.get("/", auth, async (req, res) => {
+// /api/user/me
+router.get("/me", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);
     res.json(user);
@@ -33,6 +33,26 @@ router.post("/change", auth, async (req, res) => {
     res
       .status(500)
       .json({ message: "Щось пішло не так. Помилка серверу : " + error });
+  }
+});
+
+// /api/user
+router.get("/", auth, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (e) {
+    res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });
+  }
+});
+
+// /api/user/:id
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });
   }
 });
 

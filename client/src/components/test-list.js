@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
-export const LinksList = ({ links }) => {
+export const TestsList = ({ tests }) => {
   const history = useHistory();
-  if (!links.length) {
+  if (!tests.length) {
     return <p className="center">isEmpty</p>;
   }
   return (
@@ -28,17 +28,17 @@ export const LinksList = ({ links }) => {
           </thead>
 
           <tbody>
-            {links.map((link, index) => {
+            {tests.map((test, index) => {
               return (
-                <tr key={link._id}>
+                <tr key={test._id}>
                   <td>{index + 1}</td>
-                  <td>{link.from}</td>
-                  <td>{link.to}</td>
+                  <td>{test.name}</td>
+                  <td>{test.description}</td>
                   <td>
                     <Link
                       to={() => {}}
                       onClick={() => {
-                        history.push(`/userlist/${link._id}`);
+                        history.push(`/userlist/${test._id}`);
                       }}
                     >
                       Open
@@ -54,4 +54,4 @@ export const LinksList = ({ links }) => {
   );
 };
 
-export default LinksList;
+export default TestsList;

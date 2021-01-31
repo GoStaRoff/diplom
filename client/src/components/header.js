@@ -24,9 +24,6 @@ const Header = (props) => {
               <NavLink to="/testlist">Список тестів</NavLink>
             </li>
             <li>
-              <NavLink to="/createtest">Створити тест</NavLink>
-            </li>
-            <li>
               <NavLink to="/userlist">
                 Список користувачів
               </NavLink>
@@ -45,9 +42,7 @@ const Header = (props) => {
     return(
       <nav>
         <div className="nav-wrapper">
-          <a href="/" className="brand-logo logo-text">
-            Just test
-          </a>
+        <NavLink className="brand-logo logo-text" to="/main">Just test</NavLink>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
               <NavLink to="/login">Увійти в систему</NavLink>
