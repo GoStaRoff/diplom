@@ -3,9 +3,11 @@ import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
 import userPhoto from "../images/user.png";
 import adminPhoto from "../images/admin.png";
+import { useMessage } from "../hooks/message.hook";
 import psychologyPhoto from "../images/psychology.png";
 
 export const ProfileForm = ({ user, tests }) => {
+  const message = useMessage();
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
   const [form, setForm] = useState({
@@ -13,6 +15,13 @@ export const ProfileForm = ({ user, tests }) => {
     email: user.email,
     password: "",
     userType: user.userType,
+    surname: user.surname,
+    name: user.name,
+    patronymic: user.patronymic,
+    address: user.address,
+    specialization: user.specialization,
+    psychSubscribes: user.psychSubscribes,
+    testAnswers: user.testAnswers,
   });
 
   let profilePhoto = null;
@@ -42,13 +51,17 @@ export const ProfileForm = ({ user, tests }) => {
 
   const infoChangeHandler = async () => {
     try {
-      await request(
-        "/api/user/change",
-        "POST",
-        { ...form },
-        {
-          Authorization: `Bearer ${token}`,
-        }
+      message(
+        (
+          await request(
+            "/api/user/change",
+            "POST",
+            { ...form },
+            {
+              Authorization: `Bearer ${token}`,
+            }
+          )
+        ).message
       );
     } catch (e) {}
   };
@@ -102,6 +115,61 @@ export const ProfileForm = ({ user, tests }) => {
           />
           <label htmlFor="password">Password</label>
         </div>
+        <div className="input-field">
+          <input
+            onChange={changeHandler}
+            id="surname"
+            name="surname"
+            defaultValue={form.surname}
+            type="text"
+            className="validate"
+          />
+          <label htmlFor="surname">surname</label>
+        </div>
+        <div className="input-field">
+          <input
+            onChange={changeHandler}
+            id="name"
+            name="name"
+            defaultValue={form.name}
+            type="text"
+            className="validate"
+          />
+          <label htmlFor="name">name</label>
+        </div>
+        <div className="input-field">
+          <input
+            onChange={changeHandler}
+            id="patronymic"
+            name="patronymic"
+            defaultValue={form.patronymic}
+            type="text"
+            className="validate"
+          />
+          <label htmlFor="patronymic">patronymic</label>
+        </div>
+        <div className="input-field">
+          <input
+            onChange={changeHandler}
+            id="address"
+            name="address"
+            defaultValue={form.address}
+            type="text"
+            className="validate"
+          />
+          <label htmlFor="address">address</label>
+        </div>
+        <div className="input-field">
+          <input
+            onChange={changeHandler}
+            id="specialization"
+            name="specialization"
+            defaultValue={form.specialization}
+            type="text"
+            className="validate"
+          />
+          <label htmlFor="specialization">specialization</label>
+        </div>
         <div className="change-profile">
           <button
             disabled={loading}
@@ -109,7 +177,7 @@ export const ProfileForm = ({ user, tests }) => {
             name="infoChange"
             onClick={infoChangeHandler}
           >
-            <i class="large material-icons right">send</i>Змінити інформацію
+            <i className="large material-icons right">send</i>Змінити інформацію
           </button>
         </div>
       </div>

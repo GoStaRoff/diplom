@@ -2,14 +2,17 @@ import React, { useState, useContext, useEffect } from "react";
 import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
 import { useHistory } from "react-router-dom";
+import { useMessage } from "../hooks/message.hook";
 import "./create-test.css";
 
 const CreateTest = () => {
+  const message = useMessage();
   const history = useHistory();
   const auth = useContext(AuthContext);
   const { request } = useHttp();
-  const [link, setLink] = useState("");
-  const [isTest, setIsTest] = useState(null);
+  const [testName, setTestName] = useState("");
+  const [testDescription, setTestDescription] = useState("");
+  const [isTest, setIsTest] = useState(false);
   const [questions, setQuestions] = useState([
     "Question example1?",
     "Question example2?",
@@ -17,37 +20,24 @@ const CreateTest = () => {
   ]);
   const [answers, setAnswers] = useState([
     [
-      { answer: "Answer example1", status: true },
-      { answer: "Answer example1", status: true },
-      { answer: "Answer example1", status: true },
+      { answer: "Answer example11", status: true },
+      { answer: "Answer example12", status: false },
+      { answer: "Answer example13", status: false },
     ],
     [
+      { answer: "Answer example2", status: false },
       { answer: "Answer example2", status: true },
-      { answer: "Answer example2", status: true },
-      { answer: "Answer example2", status: true },
+      { answer: "Answer example2", status: false },
     ],
     [
-      { answer: "Answer example3", status: true },
-      { answer: "Answer example3", status: true },
-      { answer: "Answer example3", status: true },
+      { answer: "Answer example31", status: false },
+      { answer: "Answer example32", status: false },
+      { answer: "Answer example33", status: true },
     ],
   ]);
 
-  const test = {
-    name: "",
-    description: "",
-    owner: "",
-    subscribesList: [],
-    questionsList: [],
-    answersList: [],
-  };
-
-  const typeHandlerTrue = () => {
-    setIsTest(true);
-  };
-
-  const typeHandlerFalse = () => {
-    setIsTest(false);
+  const typeHandler = (_isTest) => {
+    setIsTest(_isTest);
   };
 
   const addQuestion = () => {
@@ -71,10 +61,9 @@ const CreateTest = () => {
 
     newAnswers[questionIndex] = [
       ...newAnswers[questionIndex],
-      { answer: "", status: true },
+      { answer: "", status: false },
     ];
     setAnswers(newAnswers);
-    console.log(newAnswers);
   };
 
   const deleteAnswer = (questionIndex, answerIndex) => {
@@ -85,42 +74,119 @@ const CreateTest = () => {
     setAnswers(newAnswers);
   };
 
+  const createTest = async() => {
+    if (testName.length < 1) {
+      message("Введіть назву теста");
+      return;
+    }
+    if (testDescription.length < 1) {
+      message("Введіть опис теста");
+      return;
+    }
+    if (questions.length < 1) {
+      message("Створіть хоча б одне запитання");
+      return;
+    }
+    questions.map((question) => {
+      if (question.length < 1) {
+        message("Заповніть всі поля для тексту запитання")
+        return;
+      }
+    });
+    answers.map((questionAnswers)=> {
+      if(questionAnswers.length < 2){
+        message("Створіть мінімум дві відповіді для питання")
+        return;
+      }
+    })
+    answers.map((questionAnswers)=> questionAnswers.map((answer)=>{
+      if(answer.answer.length < 1){
+        message("Заповніть всі поля для тексту відповіді")
+        return
+      }
+    }));
+    const test = {
+      name: testName,
+      description: testDescription,
+      owner: "",
+      isTest: isTest,
+      subscribesList: [],
+      questionsList: questions,
+      answersList: answers,
+    };
+    try {
+      const data = await request(
+        "/api/link/generate",
+        "POST",
+        { from: link },
+        {
+          Authorization: `Bearer ${auth.token}`,
+        }
+      );
+      history.push(`/userlist/${data.link._id}`);
+    } catch (e) {}
+  };
+
+  const changeName = (event) => {
+    setTestName(event.target.value);
+  };
+
+  const changeDescription = (event) => {
+    setTestDescription(event.target.value);
+  };
+
+  const changeQuestion = (event, questionIndex) => {
+    let newQuestions = [...questions];
+    newQuestions[questionIndex] = event.target.value;
+    setQuestions(newQuestions);
+  };
+
+  const changeAnswer = (event, questionIndex, answerIndex) => {
+    let newAnswers = [...answers];
+    newAnswers[questionIndex][answerIndex].answer = event.target.value;
+    setAnswers(newAnswers);
+  };
+
+  const changeTrueAnswer = (questionIndex, answerIndex) => {
+    let newAnswers = [...answers];
+    newAnswers[questionIndex] = newAnswers[questionIndex].map(
+      (answer, index) => {
+        if (index === answerIndex) answer.status = true;
+        else answer.status = false;
+        return answer;
+      }
+    );
+    setAnswers(newAnswers);
+  };
+
   useEffect(() => {
     window.M.updateTextFields();
   }, []);
-
-  const pressHandler = async (event) => {
-    if (event.key === "Enter") {
-      try {
-        const data = await request(
-          "/api/link/generate",
-          "POST",
-          { from: link },
-          {
-            Authorization: `Bearer ${auth.token}`,
-          }
-        );
-        history.push(`/userlist/${data.link._id}`);
-      } catch (e) {}
-    }
-  };
   return (
-    <div>
+    <div onClick={window.M.updateTextFields}>
       <div className="row page-card">
         <div className="col s10 offset-s1" style={{ paddingTop: "2rem" }}>
           <div className="create-test-info">
             <h4>Інформація про тест</h4>
             <div className="input-field ">
-              <input id="input_text" type="text" data-length="40" />
+              <input
+                id="input_text"
+                type="text"
+                data-length="40"
+                defaultValue={testName}
+                onChange={changeName}
+              />
               <label htmlFor="input_text">Назва тесту</label>
             </div>
             <div className="input-field ">
               <textarea
-                id="textarea2"
+                id="textareaDescription"
                 className="materialize-textarea"
                 data-length="3000"
+                defaultValue={testDescription}
+                onChange={changeDescription}
               ></textarea>
-              <label htmlFor="textarea2">Опис тесту</label>
+              <label htmlFor="textareaDescription">Опис тесту</label>
             </div>
             <form action="#">
               <div className="file-field input-field">
@@ -138,20 +204,24 @@ const CreateTest = () => {
               <label>
                 <input
                   className="with-gap"
-                  name="group1"
+                  name="groupType"
                   type="radio"
                   checked={!isTest}
-                  onChange={typeHandlerFalse}
+                  onChange={() => {
+                    typeHandler(false);
+                  }}
                 />
                 <span>Одна правильна відповідь</span>
               </label>
               <label>
                 <input
                   className="with-gap"
-                  name="group1"
+                  name="groupType"
                   type="radio"
                   checked={isTest}
-                  onChange={typeHandlerTrue}
+                  onChange={() => {
+                    typeHandler(true);
+                  }}
                 />
                 <span>Правильної відповіді немає</span>
               </label>
@@ -161,42 +231,74 @@ const CreateTest = () => {
             <h4>Запитання</h4>
             {questions.map((question, questionIndex) => {
               return (
-                <div className="question" key={questionIndex}>
+                <div className="question" key={question + questionIndex}>
                   <div className="question-text">
                     <h5>
                       {questionIndex + 1}.{" "}
                       <div className="input-field ">
                         <textarea
-                          id="textarea2"
+                          id={`question${questionIndex}`}
                           className="materialize-textarea"
                           data-length="3000"
                           defaultValue={question}
+                          onBlur={(event) => {
+                            changeQuestion(event, questionIndex);
+                          }}
                         ></textarea>
-                        <label htmlFor="textarea2">Запитання</label>
+                        <label htmlFor={`question${questionIndex}`}>
+                          Запитання
+                        </label>
                       </div>
                     </h5>
                   </div>
                   {answers[questionIndex].map((answer, answerIndex) => {
                     return (
-                      <div className="input-field answer">
-                        <textarea
-                          id="textarea2"
-                          className="materialize-textarea"
-                          style={{width:"70%"}}
-                          data-length="3000"
-                          defaultValue={answer.answer}
-                        ></textarea>
-                        <label htmlFor="textarea2">Варіант відповіді</label>
-                        <button
-                          className="btn waves-effect waves-light btn red delete-btn"
-                          name="createTest"
-                          onClick={() => {
-                            deleteAnswer(questionIndex, answerIndex);
-                          }}
-                        >
-                          <i className="material-icons">close</i>
-                        </button>
-                        
+                      <div
+                        key={answer + question + answerIndex + questionIndex}
+                        className="answer"
+                      >
+                        {!isTest && (
+                          <label>
+                            <input
+                              className="with-gap"
+                              name={`group${questionIndex}`}
+                              type="radio"
+                              checked={
+                                answers[questionIndex][answerIndex].status
+                              }
+                              onChange={() => {
+                                changeTrueAnswer(questionIndex, answerIndex);
+                              }}
+                            />
+                            <span></span>
+                          </label>
+                        )}
+                        <div className="input-field">
+                          <textarea
+                            id={`answer${questionIndex}${answerIndex}`}
+                            className="materialize-textarea"
+                            style={{ width: "70%" }}
+                            data-length="3000"
+                            defaultValue={answer.answer}
+                            onChange={(event) => {
+                              changeAnswer(event, questionIndex, answerIndex);
+                            }}
+                          ></textarea>
+                          <label
+                            htmlFor={`answer${questionIndex}${answerIndex}`}
+                          >
+                            Варіант відповіді
+                          </label>
+                          <button
+                            className="btn waves-effect waves-light btn red delete-btn"
+                            name="createTest"
+                            onClick={() => {
+                              deleteAnswer(questionIndex, answerIndex);
+                            }}
+                          >
+                            <i className="material-icons">close</i>
+                          </button>
+                        </div>
                       </div>
                     );
                   })}
@@ -211,18 +313,16 @@ const CreateTest = () => {
                     Додати відповідь
                   </button>
                   <button
-                        className="btn waves-effect waves-light -btn white"
-                        name="createTest"
-                        style={{ color: "black" , marginLeft: '20px'}}
-                        onClick={() => {
-                          deleteQuestion(questionIndex);
-                        }}
-                      >
-                        <i className="large material-icons right">
-                          delete_forever
-                        </i>
-                        Видалити запитання
-                      </button>
+                    className="btn waves-effect waves-light -btn white"
+                    name="createTest"
+                    style={{ color: "black", marginLeft: "20px" }}
+                    onClick={() => {
+                      deleteQuestion(questionIndex);
+                    }}
+                  >
+                    <i className="large material-icons right">delete_forever</i>
+                    Видалити запитання
+                  </button>
                 </div>
               );
             })}
@@ -240,8 +340,12 @@ const CreateTest = () => {
         </div>
       </div>
       <div className="create-completed-test">
-        <button className="btn waves-effect waves-light" name="createTest">
-          <i class="large material-icons right">add_circle</i>Створити тест
+        <button
+          className="btn waves-effect waves-light"
+          name="createTest"
+          onClick={createTest}
+        >
+          <i className="large material-icons right">add_circle</i>Створити тест
         </button>
       </div>
     </div>
