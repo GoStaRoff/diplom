@@ -36,7 +36,6 @@ const AuthForm = () => {
   const loginHandler = async () => {
     try {
       const data = await request("/api/auth/login", "POST", { ...form });
-      console.log(data.typeUser);
       auth.login(data.token, data.userId, data.typeUser);
     } catch (e) {}
   };

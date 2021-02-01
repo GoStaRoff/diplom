@@ -14,6 +14,24 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
+// /api/user/delete
+router.post("/delete", auth, async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const candidate = await User.findById(userId);
+    if (candidate) {
+      await User.findByIdAndDelete(userId);
+      return res.status(200).json({ message: "Користувача видалено успішно"})
+    } else {
+      return res.status(404).json({ message: "Користувача не знайдено" });
+    }
+  } catch (e) {
+    res
+      .status(500)
+      .json({ message: "Щось пішло не так. Помилка серверу : " + error });
+  }
+});
+
 // /api/user/change
 router.post("/change", auth, async (req, res) => {
   try {
@@ -30,31 +48,35 @@ router.post("/change", auth, async (req, res) => {
     } = req.body;
     const hashedPassword = await bcrypt.hash(password, 12);
     if (password.length < 6) {
-      await User.findOneAndUpdate({email: email} , {
-        login,
-        userType,
-        surname,
-        name,
-        patronymic,
-        address,
-        specialization,
+      await User.findOneAndUpdate(
+        { email: email },
+        {
+          login,
+          userType,
+          surname,
+          name,
+          patronymic,
+          address,
+          specialization,
+        }
+      );
+      res.status(201).json({
+        message: "Дані користувача (не включаючи пароль) змінено успішно.",
       });
-      res
-        .status(201)
-        .json({
-          message: "Дані користувача (не включаючи пароль) змінено успішно.",
-        });
     } else {
-      await User.findOneAndUpdate({email: email}, {
-        password: hashedPassword,
-        login,
-        userType,
-        surname,
-        name,
-        patronymic,
-        address,
-        specialization,
-      });
+      await User.findOneAndUpdate(
+        { email: email },
+        {
+          password: hashedPassword,
+          login,
+          userType,
+          surname,
+          name,
+          patronymic,
+          address,
+          specialization,
+        }
+      );
       res.status(201).json({ message: "Дані користувача змінено успішно." });
     }
   } catch (error) {

@@ -190,17 +190,6 @@ const CreateTest = () => {
               ></textarea>
               <label htmlFor="textareaDescription">Опис тесту</label>
             </div>
-            <form action="#">
-              <div className="file-field input-field">
-                <div className="btn">
-                  <div>Картинка (не обов'язково)</div>
-                  <input type="file" accept=".png, .jpg, .jpeg" />
-                </div>
-                <div className="file-path-wrapper">
-                  <input className="file-path validate" type="text" />
-                </div>
-              </div>
-            </form>
             <div className="type-test">
               <span>Тип тесту : </span>
               <label>

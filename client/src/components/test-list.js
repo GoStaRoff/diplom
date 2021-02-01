@@ -30,12 +30,17 @@ export const TestsList = ({ tests, isAdmin }) => {
                 <img src={testPen} alt="testPen" />
               </div>
               <div className="card-content">
-                <p>
-                  {test.description}
-                </p>
+                <h5>{test.name}</h5>
               </div>
               <div className="card-action">
-                <Link href="/">{test.name}</Link>
+                <Link
+                  to={() => {}}
+                  onClick={() => {
+                    history.push(`/tests/${test._id}`);
+                  }}
+                >
+                  Пройти тест
+                </Link>
               </div>
             </div>
           );

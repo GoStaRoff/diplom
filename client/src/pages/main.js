@@ -4,7 +4,6 @@ import testWoman from "../images/testinWoman.png";
 import makingTest from "../images/makingTest.jpg";
 
 const MainPage = () => {
-  console.log(testPen);
   return (
     <div className="row cards">
       <div className="col s4">

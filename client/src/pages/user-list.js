@@ -27,7 +27,7 @@ const UserList = ({isAdmin}) => {
     return <Loader />;
   }
 
-  return <>{!loading && <UsersList users={users} isAdmin={isAdmin} />}</>;
+  return <>{!loading && <UsersList users={users} isAdmin={isAdmin} update={() => {fetchUsers()}} />}</>;
 };
 
 export default UserList;

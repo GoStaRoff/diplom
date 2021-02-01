@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useMessage } from "../hooks/message.hook";
+import { useHttp } from "../hooks/http.hook";
+import { AuthContext } from "../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
+import Loader from "../components/loader";
 
-export const UsersList = ({ users, isAdmin }) => {
+export const UsersList = ({ users, isAdmin, update }) => {
+  const message = useMessage();
+  const { loading, request } = useHttp();
+  const { token } = useContext(AuthContext);
   const history = useHistory();
   if (!users.length) {
     return <p className="center">isEmpty</p>;
   }
 
   const deleteUser = async (userId) => {
-
+    try {
+      const data = await request(
+        "/api/user/delete",
+        "POST",
+        { userId },
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      message(data.message);
+      update();
+    } catch (e) {
+      message(e);
+    }
+  };
+  if (loading) {
+    return <Loader />;
   }
   return (
     <div style={{ textAlign: "center" }}>
@@ -35,7 +58,8 @@ export const UsersList = ({ users, isAdmin }) => {
                   <td>{user.userType}</td>
                   {isAdmin && (
                     <td>
-                      <Link style={{color: 'red'}}
+                      <Link
+                        style={{ color: "red" }}
                         to={() => {}}
                         onClick={() => {
                           deleteUser(user._id);
