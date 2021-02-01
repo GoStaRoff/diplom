@@ -15,20 +15,48 @@ router.get("/me", auth, async (req, res) => {
 });
 
 // /api/user/change
-router.post("/change", auth, async (req, res) => { 
+router.post("/change", auth, async (req, res) => {
   try {
-    const { email, password, login, userType, surname, name, patronymic, address, specialization} = req.body;
+    const {
+      email,
+      password,
+      login,
+      userType,
+      surname,
+      name,
+      patronymic,
+      address,
+      specialization,
+    } = req.body;
     const hashedPassword = await bcrypt.hash(password, 12);
-    if(password.length <6){
-      await User.findByIdAndUpdate(req.user.userId, {email, login, userType, surname, name, patronymic, address, specialization});
-      res.status(201).json({ message: "Дані користувача (не включаючи пароль) змінено успішно." });
-    }
-    else{
-      await User.findByIdAndUpdate(req.user.userId, {email, password: hashedPassword, login, userType, surname, name, patronymic, address, specialization});
+    if (password.length < 6) {
+      await User.findOneAndUpdate({email: email} , {
+        login,
+        userType,
+        surname,
+        name,
+        patronymic,
+        address,
+        specialization,
+      });
+      res
+        .status(201)
+        .json({
+          message: "Дані користувача (не включаючи пароль) змінено успішно.",
+        });
+    } else {
+      await User.findOneAndUpdate({email: email}, {
+        password: hashedPassword,
+        login,
+        userType,
+        surname,
+        name,
+        patronymic,
+        address,
+        specialization,
+      });
       res.status(201).json({ message: "Дані користувача змінено успішно." });
     }
-
-    
   } catch (error) {
     res
       .status(500)

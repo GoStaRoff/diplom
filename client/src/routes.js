@@ -8,49 +8,102 @@ import UserList from "./pages/user-list";
 import AuthForm from "./pages/auth-form";
 import Header from "./components/header";
 
-export const useRoutes = (isAuthenticated) => {
-  if (isAuthenticated) {
-    return (
-      <div className="image">
-        <Header isAuth={isAuthenticated} />
-        <Switch>
-          <Route path="/profile" exact>
-            <ProfileSetting isMe={true}/>
-          </Route>
-          <Route path="/testlist" exact>
-            <TestList />
-          </Route>
-          <Route path="/testlist/createtest" exact>
-            <CreateTest />
-          </Route>
-          <Route path="/userlist/:id" exact>
-            <ProfileSetting isMe={false} />
-          </Route>
-          <Route path="/userlist" exact>
-            <UserList />
-          </Route>
-          <Route path="/main" exact>
-            <MainPage />
-          </Route>
-          <Redirect to="/profile" />
-        </Switch>
-      </div>
-    );
-  }
-  return (
-    <Switch>
-      <Route path="/" exact>
+export const useRoutes = (userType) => {
+  switch (userType) {
+    case "admin":
+      return (
         <div className="image">
-          <Header isAuth={isAuthenticated} />
-          <MainPage />
+          <Header userType={userType} />
+          <Switch>
+            <Route path="/profile" exact>
+              <ProfileSetting isMe={true} isAdmin={true} />
+            </Route>
+            <Route path="/testlist" exact>
+              <TestList isAdmin={true}/>
+            </Route>
+            <Route path="/testlist/createtest" exact>
+              <CreateTest />
+            </Route>
+            <Route path="/tests/:id" exact>
+              <TestList />
+            </Route>
+            <Route path="/userlist/:id" exact>
+              <ProfileSetting isMe={false} isAdmin={true} />
+            </Route>
+            <Route path="/userlist" exact>
+              <UserList isAdmin={true}/>
+            </Route>
+            <Route path="/main" exact>
+              <MainPage />
+            </Route>
+            <Redirect to="/profile" />
+          </Switch>
         </div>
-      </Route>
-      <Route path="/login" exact>
-        <div className="image-register">
-          <AuthForm />
+      );
+    case "psychology":
+      return (
+        <div className="image">
+          <Header userType={userType} />
+          <Switch>
+            <Route path="/profile" exact>
+              <ProfileSetting isMe={true} isAdmin={true} />
+            </Route>
+            <Route path="/testlist" exact>
+              <TestList isAdmin={false} />
+            </Route>
+            <Route path="/tests/:id" exact>
+              <TestList />
+            </Route>
+            <Route path="/userlist/:id" exact>
+              <ProfileSetting isMe={false} isAdmin={false} />
+            </Route>
+            <Route path="/userlist" exact>
+              <UserList isAdmin={false} />
+            </Route>
+            <Route path="/main" exact>
+              <MainPage />
+            </Route>
+            <Redirect to="/profile" />
+          </Switch>
         </div>
-      </Route>
-      <Redirect to="/" />
-    </Switch>
-  );
+      );
+    case "user":
+      return (
+        <div className="image">
+          <Header userType={userType} />
+          <Switch>
+            <Route path="/profile" exact>
+              <ProfileSetting isMe={true} isAdmin={true} />
+            </Route>
+            <Route path="/testlist" exact>
+              <TestList isAdmin={false} />
+            </Route>
+            <Route path="/tests/:id" exact>
+              <TestList />
+            </Route>
+            <Route path="/main" exact>
+              <MainPage />
+            </Route>
+            <Redirect to="/profile" />
+          </Switch>
+        </div>
+      );
+    default:
+      return (
+        <Switch>
+          <Route path="/" exact>
+            <div className="image">
+              <Header userType={userType} />
+              <MainPage />
+            </div>
+          </Route>
+          <Route path="/login" exact>
+            <div className="image-register">
+              <AuthForm />
+            </div>
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      );
+  }
 };

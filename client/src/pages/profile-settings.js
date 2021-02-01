@@ -5,7 +5,7 @@ import Loader from "../components/loader";
 import ProfileForm from "../components/pofile-form";
 import {useParams} from 'react-router-dom'
 
-const ProfileSetting = ({isMe}) => {
+const ProfileSetting = ({isMe, isAdmin}) => {
   const [user, setUser] = useState(null);
   const [links, setLinks] = useState([]);
   const { loading, request } = useHttp();
@@ -58,7 +58,7 @@ const ProfileSetting = ({isMe}) => {
   }
 
   return (
-    <div>{!loading && user && <ProfileForm user={user} tests={links} />}</div>
+    <div>{!loading && user && <ProfileForm user={user} tests={links} isAdmin={isAdmin} />}</div>
   );
 };
 

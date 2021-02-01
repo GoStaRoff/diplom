@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth-context";
 import Loader from "../components/loader";
 import TestsList from "../components/test-list"
 
-const TestList = () => {
+const TestList = ({isAdmin}) => {
     const [tests, setTests] = useState([])
     const {loading, request} = useHttp()
     const {token} = useContext(AuthContext)
@@ -29,7 +29,7 @@ const TestList = () => {
   
     return (
       <>
-        {!loading && <TestsList tests={tests} />}
+        {!loading && <TestsList isAdmin={isAdmin} tests={tests} />}
       </>
     )
 };

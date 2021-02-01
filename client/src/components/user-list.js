@@ -1,10 +1,14 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
-export const UsersList = ({ users }) => {
+export const UsersList = ({ users, isAdmin }) => {
   const history = useHistory();
   if (!users.length) {
     return <p className="center">isEmpty</p>;
+  }
+
+  const deleteUser = async (userId) => {
+
   }
   return (
     <div style={{ textAlign: "center" }}>
@@ -13,9 +17,11 @@ export const UsersList = ({ users }) => {
           <thead>
             <tr>
               <th>№</th>
-              <th>Original</th>
-              <th>Short</th>
-              <th>Open</th>
+              <th>Логін</th>
+              <th>Пошта</th>
+              <th>Тип користувача</th>
+              {isAdmin && <th>Видалити</th>}
+              <th>Відкрити</th>
             </tr>
           </thead>
 
@@ -26,6 +32,19 @@ export const UsersList = ({ users }) => {
                   <td>{index + 1}</td>
                   <td>{user.login}</td>
                   <td>{user.email}</td>
+                  <td>{user.userType}</td>
+                  {isAdmin && (
+                    <td>
+                      <Link style={{color: 'red'}}
+                        to={() => {}}
+                        onClick={() => {
+                          deleteUser(user._id);
+                        }}
+                      >
+                        Видалити
+                      </Link>
+                    </td>
+                  )}
                   <td>
                     <Link
                       to={() => {}}
@@ -33,7 +52,7 @@ export const UsersList = ({ users }) => {
                         history.push(`/userlist/${user._id}`);
                       }}
                     >
-                      Open
+                      Відкрити
                     </Link>
                   </td>
                 </tr>

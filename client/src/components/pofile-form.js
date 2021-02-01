@@ -6,7 +6,7 @@ import adminPhoto from "../images/admin.png";
 import { useMessage } from "../hooks/message.hook";
 import psychologyPhoto from "../images/psychology.png";
 
-export const ProfileForm = ({ user, tests }) => {
+export const ProfileForm = ({ user, tests, isAdmin }) => {
   const message = useMessage();
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
@@ -40,9 +40,8 @@ export const ProfileForm = ({ user, tests }) => {
   }
 
   useEffect(() => {
+    setForm({ ...user, password: "" });
     window.M.updateTextFields();
-    console.log(user);
-    console.log(tests);
   }, [user, tests]);
 
   const changeHandler = (event) => {
@@ -72,7 +71,7 @@ export const ProfileForm = ({ user, tests }) => {
         <img className="userPhoto" src={profilePhoto} alt="userPhoto" />
         <div className="input-field">
           <input
-            disabled
+            disabled={!isAdmin}
             value={form.userType}
             id="userType"
             name="userType"
@@ -80,99 +79,108 @@ export const ProfileForm = ({ user, tests }) => {
             onChange={changeHandler}
             className="validate"
           />
-          <label htmlFor="disabled">User type</label>
+          <label htmlFor="disabled">Тип користувача</label>
         </div>
         <div className="input-field">
           <input
+            disabled={!isAdmin}
             id="login"
             name="login"
             onChange={changeHandler}
             type="text"
-            defaultValue={form.login}
+            value={form.login}
             className="validate"
           />
-          <label htmlFor="login">Login</label>
+          <label htmlFor="login">Логін</label>
         </div>
         <div className="input-field">
           <input
+            disabled
             onChange={changeHandler}
             id="email"
             name="email"
-            defaultValue={form.email}
+            value={form.email}
             type="text"
             className="validate"
           />
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Пошта</label>
         </div>
         <div className="input-field">
           <input
+            disabled={!isAdmin}
             onChange={changeHandler}
             id="password"
             name="password"
             type="password"
-            defaultValue={form.password}
+            value={form.password}
             className="validate"
           />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Пароль</label>
         </div>
         <div className="input-field">
           <input
+            disabled={!isAdmin}
             onChange={changeHandler}
             id="surname"
             name="surname"
-            defaultValue={form.surname}
+            value={form.surname}
             type="text"
             className="validate"
           />
-          <label htmlFor="surname">surname</label>
+          <label htmlFor="surname">Фамілія</label>
         </div>
         <div className="input-field">
           <input
+            disabled={!isAdmin}
             onChange={changeHandler}
             id="name"
             name="name"
-            defaultValue={form.name}
+            value={form.name}
             type="text"
             className="validate"
           />
-          <label htmlFor="name">name</label>
+          <label htmlFor="name">Ім'я</label>
         </div>
         <div className="input-field">
           <input
+            disabled={!isAdmin}
             onChange={changeHandler}
             id="patronymic"
             name="patronymic"
-            defaultValue={form.patronymic}
+            value={form.patronymic}
             type="text"
             className="validate"
           />
-          <label htmlFor="patronymic">patronymic</label>
+          <label htmlFor="patronymic">По-батькові</label>
         </div>
         <div className="input-field">
           <input
+            disabled={!isAdmin}
             onChange={changeHandler}
             id="address"
             name="address"
-            defaultValue={form.address}
+            value={form.address}
             type="text"
             className="validate"
           />
-          <label htmlFor="address">address</label>
+          <label htmlFor="address">Адреса</label>
         </div>
         <div className="input-field">
           <input
+            disabled={!isAdmin}
             onChange={changeHandler}
             id="specialization"
             name="specialization"
-            defaultValue={form.specialization}
+            value={form.specialization}
             type="text"
             className="validate"
           />
-          <label htmlFor="specialization">specialization</label>
+          <label htmlFor="specialization">№ спеціалізації</label>
         </div>
-        <div className="change-profile">
+        <div hidden={!isAdmin} className="change-profile">
           <button
             disabled={loading}
+            
             className="btn waves-effect waves-light"
             name="infoChange"
             onClick={infoChangeHandler}

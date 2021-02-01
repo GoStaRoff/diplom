@@ -7,10 +7,9 @@ import { useAuth } from "./hooks/auth.hook";
 import Loader from "./components/loader";
 
 function App() {
-  const { token, login, logout, userId, ready} = useAuth();
+  const { token, login, logout, userId, ready, userType} = useAuth();
   const isAuthenticated = !!token;
-  const routes = useRoutes(isAuthenticated);
-
+  const routes = useRoutes(userType);
   if(!ready){
     return <Loader />
   }

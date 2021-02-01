@@ -35,10 +35,24 @@
   margin-left: 40px;
 }
 
-.cards {
-  margin-left: 6%;
+.cards,
+.tests {
   margin-top: 60px;
+  margin-left: 5%;
+  margin-right: 5%;
   opacity: 90%;
+}
+
+.tests {
+  display:flex;
+  justify-content:space-around;
+  flex-wrap: wrap;
+}
+
+.tests .card {
+  width: 20%;
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
 .auth-page {
@@ -160,7 +174,7 @@
 
 .add-question {
   text-align: center;
-  
+
   margin-bottom: 20px;
 }
 

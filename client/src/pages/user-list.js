@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth-context";
 import Loader from "../components/loader";
 import UsersList from "../components/user-list";
 
-const UserList = () => {
+const UserList = ({isAdmin}) => {
   const [users, setUsers] = useState([]);
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
@@ -27,7 +27,7 @@ const UserList = () => {
     return <Loader />;
   }
 
-  return <>{!loading && <UsersList users={users} />}</>;
+  return <>{!loading && <UsersList users={users} isAdmin={isAdmin} />}</>;
 };
 
 export default UserList;
