@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom'
 
 const ProfileSetting = ({isMe, isAdmin}) => {
   const [user, setUser] = useState(null);
-  const [links, setLinks] = useState([]);
+  const [tests, setTests] = useState([]);
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
   const userId = useParams().id;
@@ -31,18 +31,18 @@ const ProfileSetting = ({isMe, isAdmin}) => {
     } catch (e) {}
   }, [token, request, userId]);
 
-  const fetchLinks = useCallback(async () => {
+  const fetchTests = useCallback(async () => {
     try {
-      const fetched = await request("/api/link", "GET", null, {
+      const fetched = await request(`/api/test/of/${userId}`, "GET", null, {
         Authorization: `Bearer ${token}`,
       });
-      setLinks(fetched);
+      setTests(fetched);
     } catch (e) {}
-  }, [token, request]);
+  }, [token, request, userId]);
 
   useEffect(() => {
-    fetchLinks();
-  }, [fetchLinks]);
+    fetchTests();
+  }, [fetchTests]);
 
   useEffect(() => {
     if(isMe){
@@ -58,7 +58,7 @@ const ProfileSetting = ({isMe, isAdmin}) => {
   }
 
   return (
-    <div>{!loading && user && <ProfileForm user={user} isMe={isMe} tests={links} isAdmin={isAdmin} />}</div>
+    <div>{!loading && user && <ProfileForm user={user} isMe={isMe} tests={tests} isAdmin={isAdmin} />}</div>
   );
 };
 

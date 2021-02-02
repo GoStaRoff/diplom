@@ -4,7 +4,6 @@ const schema = new Schema({
   description : { type:String, default:"Опис"},
   isTest: { type: Boolean, required: true},
   owner: { type: Types.ObjectId, required: true , ref: "User"},
-  subscribesList: { type: Array, ref: "User" },
   questionsList: { type: Array, required: true },
   answersList: { type: Array, required: true },
 });
