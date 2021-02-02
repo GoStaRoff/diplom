@@ -51,4 +51,22 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+// /api/user/delete
+router.post("/delete", auth, async (req, res) => {
+  try {
+    const { testId } = req.body;
+    const candidate = await Test.findById(testId);
+    if (candidate) {
+      await Test.findByIdAndDelete(testId);
+      return res.status(200).json({ message: "Тест видалено успішно"})
+    } else {
+      return res.status(404).json({ message: "Тест не знайдено" });
+    }
+  } catch (e) {
+    res
+      .status(500)
+      .json({ message: "Щось пішло не так. Помилка серверу : " + error });
+  }
+});
+
 module.exports = router;

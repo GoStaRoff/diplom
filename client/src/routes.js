@@ -19,7 +19,7 @@ export const useRoutes = (userType) => {
               <ProfileSetting isMe={true} isAdmin={true} />
             </Route>
             <Route path="/testlist" exact>
-              <TestList isAdmin={true}/>
+              <TestList isAdmin={true} isDelete={true}/>
             </Route>
             <Route path="/testlist/createtest" exact>
               <CreateTest />
@@ -28,7 +28,7 @@ export const useRoutes = (userType) => {
               <TestList />
             </Route>
             <Route path="/userlist/:id" exact>
-              <ProfileSetting isMe={false} isAdmin={true} />
+              <ProfileSetting isAdmin={true} />
             </Route>
             <Route path="/userlist" exact>
               <UserList isAdmin={true}/>
@@ -49,16 +49,19 @@ export const useRoutes = (userType) => {
               <ProfileSetting isMe={true} isAdmin={true} />
             </Route>
             <Route path="/testlist" exact>
-              <TestList isAdmin={false} />
+              <TestList isAdmin={true} />
             </Route>
             <Route path="/tests/:id" exact>
               <TestList />
             </Route>
             <Route path="/userlist/:id" exact>
-              <ProfileSetting isMe={false} isAdmin={false} />
+              <ProfileSetting/>
             </Route>
             <Route path="/userlist" exact>
-              <UserList isAdmin={false} />
+              <UserList/>
+            </Route>
+            <Route path="/testlist/createtest" exact>
+              <CreateTest />
             </Route>
             <Route path="/main" exact>
               <MainPage />
@@ -76,7 +79,7 @@ export const useRoutes = (userType) => {
               <ProfileSetting isMe={true} isAdmin={true} />
             </Route>
             <Route path="/testlist" exact>
-              <TestList isAdmin={false} />
+              <TestList />
             </Route>
             <Route path="/tests/:id" exact>
               <TestList />

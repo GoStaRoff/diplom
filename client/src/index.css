@@ -31,6 +31,21 @@
   margin-left: 100px;
 }
 
+.test-action{
+  display: block;
+  border-top: 2px solid rgba(155, 155, 155, 0.555);
+  line-height: 3rem;
+}
+
+.test-action .complete{
+  color:rgb(201, 130, 0);
+}
+
+.test-action .delete{
+  color:rgb(201, 0, 0);
+  margin-left: 25px;
+}
+
 .nav-wrapper ul li {
   margin-left: 40px;
 }
