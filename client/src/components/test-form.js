@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
 const TestForm = ({ test }) => {
-  const [userAnswers, setUserAnswers] = useState([]);
-  console.log(test);
-
+  const [userAnswers, setUserAnswers] = useState(Array(test.questionsList.length));
+  
   return (
     <div className="row page-card">
       <div className="test-info">
