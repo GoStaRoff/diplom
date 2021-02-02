@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 import Loader from "../components/loader";
 
-export const UsersList = ({ users, isAdmin, update }) => {
+export const UsersList =({ users, isAdmin, update }) => {
   const message = useMessage();
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);

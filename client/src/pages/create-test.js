@@ -98,9 +98,9 @@ const CreateTest = () => {
         message("Створіть мінімум дві відповіді для питання");
         return;
       }
-    };
+    }
     for (let i = 0; i < answers.length; i++) {
-      for(let j = 0; j < answers[i].length; j++){
+      for (let j = 0; j < answers[i].length; j++) {
         if (answers[i][j].answer.length < 1) {
           message("Заповніть всі поля для тексту відповіді");
           return;

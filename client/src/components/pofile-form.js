@@ -6,8 +6,7 @@ import adminPhoto from "../images/admin.png";
 import { useMessage } from "../hooks/message.hook";
 import psychologyPhoto from "../images/psychology.png";
 
-export const ProfileForm = ({ user, tests, isAdmin }) => {
-  console.log(user)
+export const ProfileForm = ({ user, tests, isAdmin, isMe }) => {
   const message = useMessage();
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
@@ -72,7 +71,7 @@ export const ProfileForm = ({ user, tests, isAdmin }) => {
         <img className="userPhoto" src={profilePhoto} alt="userPhoto" />
         <div className="input-field">
           <input
-            disabled={!isAdmin}
+            disabled={!isAdmin || isMe}
             value={form.userType}
             id="userType"
             name="userType"

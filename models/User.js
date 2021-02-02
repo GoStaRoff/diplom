@@ -9,7 +9,6 @@ const schema = new Schema({
   patronymic: { type: String },
   address: { type: String },
   specialization: { type: String },
-  psychSubscribes: { type: Array, ref: "User" },
   testAnswers: { type: Array, ref: "UserAnswer" },
 });
 

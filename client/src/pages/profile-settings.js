@@ -58,7 +58,7 @@ const ProfileSetting = ({isMe, isAdmin}) => {
   }
 
   return (
-    <div>{!loading && user && <ProfileForm user={user} tests={links} isAdmin={isAdmin} />}</div>
+    <div>{!loading && user && <ProfileForm user={user} isMe={isMe} tests={links} isAdmin={isAdmin} />}</div>
   );
 };
 

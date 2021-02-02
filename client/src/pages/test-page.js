@@ -16,7 +16,6 @@ const TestPage = () => {
       const fetched = await request(`/api/test/${testId}`, "GET", null, {
         Authorization: `Bearer ${token}`,
       });
-      console.log(fetched)
       setTest(fetched);
     } catch (e) {}
   }, [token, request, testId]);

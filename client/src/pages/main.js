@@ -2,6 +2,7 @@ import React from "react";
 import testPen from "../images/testPen.jpg";
 import testWoman from "../images/testinWoman.png";
 import makingTest from "../images/makingTest.jpg";
+import { NavLink } from "react-router-dom";
 
 const MainPage = () => {
   return (
@@ -17,7 +18,7 @@ const MainPage = () => {
             </p>
           </div>
           <div className="card-action">
-            <a href="/">Дізнатися більше</a>
+            <NavLink to="/login">Дізнатися більше</NavLink>
           </div>
         </div>
       </div>
@@ -32,7 +33,7 @@ const MainPage = () => {
             </p>
           </div>
           <div className="card-action">
-            <a href="/">Дізнатися більше</a>
+            <NavLink to="/login">Дізнатися більше</NavLink>
           </div>
         </div>
       </div>
@@ -45,7 +46,7 @@ const MainPage = () => {
             <p>Особисті кабінети для психологів та система для оцінювання.</p>
           </div>
           <div className="card-action">
-            <a href="/">Дізнатися більше</a>
+            <NavLink to="/login">Дізнатися більше</NavLink>
           </div>
         </div>
       </div>

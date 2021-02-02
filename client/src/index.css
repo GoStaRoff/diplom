@@ -31,18 +31,24 @@
   margin-left: 100px;
 }
 
-.test-action{
+.card-content h5 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.test-action {
   display: block;
   border-top: 2px solid rgba(155, 155, 155, 0.555);
   line-height: 3rem;
 }
 
-.test-action .complete{
-  color:rgb(201, 130, 0);
+.test-action .complete {
+  color: rgb(201, 130, 0);
 }
 
-.test-action .delete{
-  color:rgb(201, 0, 0);
+.test-action .delete {
+  color: rgb(201, 0, 0);
   margin-left: 25px;
 }
 
@@ -59,8 +65,8 @@
 }
 
 .tests {
-  display:flex;
-  justify-content:space-around;
+  display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
@@ -202,6 +208,10 @@
   display: flex;
 }
 
+.answer-text{
+  font-size: 28px
+}
+
 .answer .input-field {
   width: 100%;
 }
@@ -217,4 +227,21 @@
   width: 100%;
   text-align: center;
   margin-bottom: 20px;
+}
+
+.test-info {
+  overflow-wrap: break-word;
+  margin: 50px;
+  border-top: 2px solid wheat;
+}
+
+.test-info p {
+  font-size: 18px;
+}
+
+.questions {
+  border-top: 2px solid wheat;
+
+  overflow-wrap: break-word;
+  margin: 50px;
 }
