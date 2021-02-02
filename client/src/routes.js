@@ -5,6 +5,7 @@ import CreateTest from "./pages/create-test";
 import ProfileSetting from "./pages/profile-settings";
 import TestList from "./pages/test-list";
 import UserList from "./pages/user-list";
+import TestPage from "./pages/test-page";
 import AuthForm from "./pages/auth-form";
 import Header from "./components/header";
 
@@ -16,22 +17,22 @@ export const useRoutes = (userType) => {
           <Header userType={userType} />
           <Switch>
             <Route path="/profile" exact>
-              <ProfileSetting isMe={true} isAdmin={true} />
+              <ProfileSetting isMe isAdmin />
             </Route>
             <Route path="/testlist" exact>
-              <TestList isAdmin={true} isDelete={true}/>
+              <TestList isAdmin isDelete />
             </Route>
             <Route path="/testlist/createtest" exact>
               <CreateTest />
             </Route>
             <Route path="/tests/:id" exact>
-              <TestList />
+              <TestPage />
             </Route>
             <Route path="/userlist/:id" exact>
-              <ProfileSetting isAdmin={true} />
+              <ProfileSetting isAdmin />
             </Route>
             <Route path="/userlist" exact>
-              <UserList isAdmin={true}/>
+              <UserList isAdmin />
             </Route>
             <Route path="/main" exact>
               <MainPage />
@@ -46,19 +47,19 @@ export const useRoutes = (userType) => {
           <Header userType={userType} />
           <Switch>
             <Route path="/profile" exact>
-              <ProfileSetting isMe={true} isAdmin={true} />
+              <ProfileSetting isMe isAdmin />
             </Route>
             <Route path="/testlist" exact>
-              <TestList isAdmin={true} />
+              <TestList isAdmin />
             </Route>
             <Route path="/tests/:id" exact>
-              <TestList />
+              <TestPage />
             </Route>
             <Route path="/userlist/:id" exact>
-              <ProfileSetting/>
+              <ProfileSetting />
             </Route>
             <Route path="/userlist" exact>
-              <UserList/>
+              <UserList />
             </Route>
             <Route path="/testlist/createtest" exact>
               <CreateTest />
@@ -82,7 +83,7 @@ export const useRoutes = (userType) => {
               <TestList />
             </Route>
             <Route path="/tests/:id" exact>
-              <TestList />
+              <TestPage />
             </Route>
             <Route path="/main" exact>
               <MainPage />

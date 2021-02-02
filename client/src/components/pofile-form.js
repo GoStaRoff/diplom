@@ -7,6 +7,7 @@ import { useMessage } from "../hooks/message.hook";
 import psychologyPhoto from "../images/psychology.png";
 
 export const ProfileForm = ({ user, tests, isAdmin }) => {
+  console.log(user)
   const message = useMessage();
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
