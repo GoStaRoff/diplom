@@ -263,7 +263,6 @@ const CreateTest = () => {
                           <textarea
                             id={`answer${questionIndex}${answerIndex}`}
                             className="materialize-textarea"
-                            style={{ width: "70%" }}
                             data-length="3000"
                             defaultValue={answer.answer}
                             onChange={(event) => {
@@ -275,15 +274,24 @@ const CreateTest = () => {
                           >
                             Варіант відповіді
                           </label>
-                          <button
-                            className="btn waves-effect waves-light btn red delete-btn"
-                            name="createTest"
-                            onClick={() => {
-                              deleteAnswer(questionIndex, answerIndex);
-                            }}
-                          >
-                            <i className="material-icons">close</i>
-                          </button>
+                        </div>
+                        <button
+                          className="btn waves-effect waves-light btn red delete-btn"
+                          name="createTest"
+                          onClick={() => {
+                            deleteAnswer(questionIndex, answerIndex);
+                          }}
+                        >
+                          <i className="material-icons">close</i>
+                        </button>
+                        <div className="file-field input-field answer-image">
+                          <div className="btn" >
+                            <i className="material-icons">image</i>
+                            <input type="file" accept=".png, .jpg, .jpeg" />
+                          </div>
+                          <div className="file-path-wrapper" style={{width:'100px'}}>
+                            <input className="file-path validate" type="text" />
+                          </div>
                         </div>
                       </div>
                     );

@@ -3,7 +3,6 @@ import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
 import { Link } from "react-router-dom";
 import userPhoto from "../images/user.png";
-import Loader from "../components/loader";
 import adminPhoto from "../images/admin.png";
 import { useMessage } from "../hooks/message.hook";
 import psychologyPhoto from "../images/psychology.png";

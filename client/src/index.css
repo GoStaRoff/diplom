@@ -203,9 +203,15 @@
 }
 
 .delete-btn {
-  height: 2rem;
-  width: 2.5rem;
+  margin-top: 15px;
+  height: 45px;
+  font-size:20px;
+  width: 60px;
   padding: 0;
+}
+
+.answer-image{
+  margin-left: 10px;
 }
 
 .info-form {
@@ -232,7 +238,7 @@
 }
 
 .answer .input-field {
-  width: 100%;
+  width: 50%;
 }
 
 .completed-test {
