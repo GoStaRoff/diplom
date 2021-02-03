@@ -40,7 +40,7 @@ export const TestsList = ({ tests, isAdmin, isDelete, update }) => {
         {isAdmin && (
           <NavLink to="/testlist/createtest">
             <button
-              className="btn waves-effect waves-light create-test-btn"
+              className="btn waves-effect waves-light red create-test-btn"
               name="createTest"
             >
               <i className="large material-icons right">add_circle</i>Створити
