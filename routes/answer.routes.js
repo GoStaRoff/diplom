@@ -27,12 +27,23 @@ router.post("/add", auth, async (req, res) => {
 router.get("/of/:id", auth, async (req, res) => {
   try {
     const answers = await Answers.find({ userId: req.params.id });
-    console.log(answers)
     let tests = Array(answers.length);
-    answers.forEach( async(answer, answerIndex) =>{
-      tests[answerIndex] = await Test.findById(answer.testId)
-    });
-    res.json(tests)
+    for (let i = 0; i < answers.length; i++) {
+      tests[i] = await Test.findById(answers[i].testId);
+    }
+
+    return res.json(tests);
+  } catch (e) {
+    res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });
+  }
+});
+
+// /api/answers
+router.post("/", auth, async (req, res) => {
+  try {
+    const { testId, userId} = req.body;
+    const answers = await Answers.findOne({ userId, testId });
+    res.status(200).json(answers.answersList)
   } catch (e) {
     res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });
   }

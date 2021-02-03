@@ -1,26 +1,38 @@
 import React, { useState, useContext } from "react";
 import { useMessage } from "../hooks/message.hook";
 import { useHttp } from "../hooks/http.hook";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 
-const TestForm = ({ test }) => {
+const TestForm = ({ test, isCheck, completedAnswers }) => {
+  const history = useHistory();
   const message = useMessage();
   const auth = useContext(AuthContext);
   const { request } = useHttp();
-  const [userAnswers, setUserAnswers] = useState(
-    Array(test.questionsList.length)
+  const [answersChecked, setAnswersChecked] = useState(
+    Array(test.answersList.length)
   );
+  const [userAnswers, setUserAnswers] = useState(test.answersList);
 
   const changeHandler = (questionIndex, answerIndex) => {
+    let newAnswersChecked = [...answersChecked];
+    newAnswersChecked[questionIndex] = true;
+    setAnswersChecked(newAnswersChecked);
+
     let newUserAnswers = [...userAnswers];
-    newUserAnswers[questionIndex] =
-      test.answersList[questionIndex][answerIndex].answer;
+    for (let i = 0; i < newUserAnswers[questionIndex].length; i++) {
+      if (i !== answerIndex) {
+        newUserAnswers[questionIndex][i].userSelect = false;
+      } else {
+        newUserAnswers[questionIndex][i].userSelect = true;
+      }
+    }
     setUserAnswers(newUserAnswers);
   };
 
   const completeTest = async () => {
     for (let i = 0; i < userAnswers.length; i++) {
-      if (userAnswers[i] === undefined) {
+      if (answersChecked[i] === undefined) {
         message("Заповніть усі питання відповіддю");
         return;
       }
@@ -35,6 +47,7 @@ const TestForm = ({ test }) => {
         }
       );
       message(data.message);
+      history.push("/profile")
     } catch (e) {
       message(e);
     }
@@ -62,38 +75,60 @@ const TestForm = ({ test }) => {
                 </h5>
               </div>
               {test.answersList[questionIndex].map((answer, answerIndex) => {
-                return (
-                  <div
-                    key={answer + question + answerIndex + questionIndex}
-                    className="answer"
-                  >
-                    <label className="answer-text">
-                      <input
-                        className="with-gap"
-                        name={`group${questionIndex}`}
-                        type="radio"
-                        onChange={() => {
-                          changeHandler(questionIndex, answerIndex);
-                        }}
-                      />
-                      <span>{answer.answer}</span>
-                    </label>
-                  </div>
-                );
+                if (isCheck) {
+                  return (
+                    <div
+                      key={answer + question + answerIndex + questionIndex}
+                      className={`check-answer ${
+                        completedAnswers[questionIndex][answerIndex].userSelect
+                          ? "user-selected"
+                          : ""
+                      } ${
+                        !test.isTest &&
+                        (completedAnswers[questionIndex][answerIndex].status
+                          ? "correct"
+                          : "uncorrect")
+                      }`}
+                    >
+                      {completedAnswers[questionIndex][answerIndex].answer}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div
+                      key={answer + question + answerIndex + questionIndex}
+                      className="answer"
+                    >
+                      <label className="answer-text">
+                        <input
+                          className="with-gap"
+                          name={`group${questionIndex}`}
+                          type="radio"
+                          onChange={() => {
+                            changeHandler(questionIndex, answerIndex);
+                          }}
+                        />
+                        <span>{answer.answer}</span>
+                      </label>
+                    </div>
+                  );
+                }
               })}
             </div>
           );
         })}
       </div>
-      <div className="completed-test">
-        <button
-          className="btn waves-effect waves-light"
-          name="createTest"
-          onClick={completeTest}
-        >
-          <i className="large material-icons right">check</i>Завершити тест
-        </button>
-      </div>
+      {!isCheck && (
+        <div className="completed-test">
+          <button
+            className="btn waves-effect waves-light"
+            name="createTest"
+            onClick={completeTest}
+          >
+            <i className="large material-icons right">check</i>Завершити тест
+          </button>
+        </div>
+      )}
     </div>
   );
 };

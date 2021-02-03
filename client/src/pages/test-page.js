@@ -5,11 +5,13 @@ import Loader from "../components/loader";
 import TestForm from "../components/test-form";
 import { useParams } from "react-router-dom";
 
-const TestPage = () => {
+const TestPage = ({ isCheck }) => {
   const [test, setTest] = useState(null);
+  const [answers, setAnswers] = useState(null);
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
-  const testId = useParams().id;
+  const testId = useParams().testId;
+  const userId = useParams().userId;
 
   const fetchTest = useCallback(async () => {
     try {
@@ -20,15 +22,44 @@ const TestPage = () => {
     } catch (e) {}
   }, [token, request, testId]);
 
+  const fetchAnswers = useCallback(async () => {
+    try {
+      console.log("111111111111111111111")
+      const fetched = await request(
+        `/api/answers`,
+        "POST",
+        { userId, testId },
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      setAnswers(fetched);
+    } catch (e) {
+      console.log(e)
+    }
+  }, [token, request, userId, testId]);
+
   useEffect(() => {
     fetchTest();
   }, [fetchTest]);
 
-  if (loading) {
+  useEffect(() => {
+    if (isCheck) {
+      fetchAnswers();
+    }
+  }, [isCheck, fetchAnswers]);
+
+  if (loading || (!answers && isCheck)) {
     return <Loader />;
   }
 
-  return <div>{!loading && test && <TestForm test={test} />}</div>;
+  return (
+    <div>
+      {!loading && test && (
+        <TestForm test={test} isCheck={isCheck} completedAnswers={answers} />
+      )}
+    </div>
+  );
 };
 
 export default TestPage;

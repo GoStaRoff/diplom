@@ -1,15 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
+import { Link } from "react-router-dom";
 import userPhoto from "../images/user.png";
+import Loader from "../components/loader";
 import adminPhoto from "../images/admin.png";
 import { useMessage } from "../hooks/message.hook";
 import psychologyPhoto from "../images/psychology.png";
 
-export const ProfileForm = ({ user, tests, isAdmin, isMe }) => {
+export const ProfileForm = ({ user, tests, isAdmin, isMe, isPcych }) => {
   const message = useMessage();
   const { loading, request } = useHttp();
-  const { token } = useContext(AuthContext);
+  const { token} = useContext(AuthContext);
   const [form, setForm] = useState({
     login: user.login,
     email: user.email,
@@ -180,7 +182,6 @@ export const ProfileForm = ({ user, tests, isAdmin, isMe }) => {
         <div hidden={!isAdmin} className="change-profile">
           <button
             disabled={loading}
-            
             className="btn waves-effect waves-light"
             name="infoChange"
             onClick={infoChangeHandler}
@@ -194,10 +195,19 @@ export const ProfileForm = ({ user, tests, isAdmin, isMe }) => {
         {tests.map((test, testIndex) => {
           return (
             <div className="test" key={testIndex}>
-              <p>Hello</p>
-              <a target="_blank" rel="noopener noreferrer" href='/'>
-                World
+              <p className="test-name">{test.name}</p>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`/tests/${test._id}`}
+              >
+                Виконати
               </a>
+              {isPcych && (
+                <Link className="delete" to={`/check/${user._id}/${test._id}`}>
+                  Переглянути відповіді
+                </Link>
+              )}
             </div>
           );
         })}

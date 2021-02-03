@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const Answers = require("../models/UserAnswer");
 const auth = require("../middleware/auth.middleware");
 const router = Router();
 
@@ -21,6 +22,7 @@ router.post("/delete", auth, async (req, res) => {
     const candidate = await User.findById(userId);
     if (candidate) {
       await User.findByIdAndDelete(userId);
+      await Answers.deleteMany({userId});
       return res.status(200).json({ message: "Користувача видалено успішно"})
     } else {
       return res.status(404).json({ message: "Користувача не знайдено" });

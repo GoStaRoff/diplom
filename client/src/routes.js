@@ -25,7 +25,7 @@ export const useRoutes = (userType) => {
             <Route path="/testlist/createtest" exact>
               <CreateTest />
             </Route>
-            <Route path="/tests/:id" exact>
+            <Route path="/tests/:testId" exact>
               <TestPage />
             </Route>
             <Route path="/userlist/:id" exact>
@@ -47,16 +47,16 @@ export const useRoutes = (userType) => {
           <Header userType={userType} />
           <Switch>
             <Route path="/profile" exact>
-              <ProfileSetting isMe isAdmin />
+              <ProfileSetting isMe isAdmin isPcych />
             </Route>
             <Route path="/testlist" exact>
               <TestList isAdmin />
             </Route>
-            <Route path="/tests/:id" exact>
+            <Route path="/tests/:testId" exact>
               <TestPage />
             </Route>
             <Route path="/userlist/:id" exact>
-              <ProfileSetting />
+              <ProfileSetting isPcych/>
             </Route>
             <Route path="/userlist" exact>
               <UserList />
@@ -66,6 +66,9 @@ export const useRoutes = (userType) => {
             </Route>
             <Route path="/main" exact>
               <MainPage />
+            </Route>
+            <Route path="/check/:userId/:testId" exact>
+              <TestPage isCheck />
             </Route>
             <Redirect to="/profile" />
           </Switch>
@@ -82,7 +85,7 @@ export const useRoutes = (userType) => {
             <Route path="/testlist" exact>
               <TestList />
             </Route>
-            <Route path="/tests/:id" exact>
+            <Route path="/tests/:testId" exact>
               <TestPage />
             </Route>
             <Route path="/main" exact>

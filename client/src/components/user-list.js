@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
 import { useMessage } from "../hooks/message.hook";
 import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
@@ -13,7 +13,7 @@ export const UsersList =({ users, isAdmin, update }) => {
   if (!users.length) {
     return <p className="center">isEmpty</p>;
   }
-
+  
   const deleteUser = async (userId) => {
     try {
       const data = await request(

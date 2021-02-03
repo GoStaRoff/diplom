@@ -13,28 +13,8 @@ const CreateTest = () => {
   const [testName, setTestName] = useState("");
   const [testDescription, setTestDescription] = useState("");
   const [isTest, setIsTest] = useState(false);
-  const [questions, setQuestions] = useState([
-    "Question example1?",
-    "Question example2?",
-    "Question example3?",
-  ]);
-  const [answers, setAnswers] = useState([
-    [
-      { answer: "Answer example11", status: true },
-      { answer: "Answer example12", status: false },
-      { answer: "Answer example13", status: false },
-    ],
-    [
-      { answer: "Answer example2", status: false },
-      { answer: "Answer example2", status: true },
-      { answer: "Answer example2", status: false },
-    ],
-    [
-      { answer: "Answer example31", status: false },
-      { answer: "Answer example32", status: false },
-      { answer: "Answer example33", status: true },
-    ],
-  ]);
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
 
   const typeHandler = (_isTest) => {
     setIsTest(_isTest);
@@ -107,6 +87,21 @@ const CreateTest = () => {
         }
       }
     }
+    if (!isTest) {
+      for (let i = 0; i < answers.length; i++) {
+        let isChecked = false;
+        for (let j = 0; j < answers[i].length; j++) {
+          if (answers[i][j].status) {
+            isChecked = true;
+          }
+        }
+        if (!isChecked) {
+          message("Оберіть правильну відповідь для усіх запитань");
+          return;
+        }
+      }
+    }
+
     const test = {
       name: testName,
       description: testDescription,

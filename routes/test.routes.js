@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const Test = require("../models/Test");
+const Answers = require("../models/UserAnswer");
 const shortid = require("shortid");
 const auth = require("../middleware/auth.middleware");
 const config = require("config");
@@ -58,6 +59,7 @@ router.post("/delete", auth, async (req, res) => {
     const candidate = await Test.findById(testId);
     if (candidate) {
       await Test.findByIdAndDelete(testId);
+      await Answers.deleteMany({testId});
       return res.status(200).json({ message: "Тест видалено успішно"})
     } else {
       return res.status(404).json({ message: "Тест не знайдено" });

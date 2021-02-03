@@ -47,9 +47,28 @@
   color: rgb(201, 130, 0);
 }
 
-.test-action .delete {
-  color: rgb(201, 0, 0);
+.delete {
+  color: red !important;
   margin-left: 25px;
+}
+
+.user-selected {
+  background-color: yellow;
+}
+
+.correct {
+  color: green;
+}
+
+.uncorrect {
+  color: red;
+}
+
+.check-answer {
+  margin-left: 25px;
+
+  font-size: 18px;
+  display: flex;
 }
 
 .nav-wrapper ul li {
@@ -208,16 +227,15 @@
   display: flex;
 }
 
-.answer-text{
-  font-size: 28px
+.answer-text {
+  font-size: 28px;
 }
 
 .answer .input-field {
   width: 100%;
 }
 
-.completed-test{
-  
+.completed-test {
   width: 100%;
   text-align: center;
   margin-bottom: 20px;
@@ -251,4 +269,8 @@
 
   overflow-wrap: break-word;
   margin: 50px;
+}
+
+.test .test-name {
+  overflow-wrap: break-word;
 }

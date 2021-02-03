@@ -3,15 +3,14 @@ import { useHttp } from "../hooks/http.hook";
 import { AuthContext } from "../context/auth-context";
 import Loader from "../components/loader";
 import ProfileForm from "../components/pofile-form";
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 
-const ProfileSetting = ({isMe, isAdmin}) => {
+const ProfileSetting = ({ isMe, isAdmin, isPcych }) => {
   const [user, setUser] = useState(null);
   const [tests, setTests] = useState([]);
   const { loading, request } = useHttp();
-  const { token } = useContext(AuthContext);
-  const userId = useParams().id;
-
+  const { token, userId } = useContext(AuthContext);
+  const userIds = useParams().id;
 
   const fetchMe = useCallback(async () => {
     try {
@@ -24,32 +23,37 @@ const ProfileSetting = ({isMe, isAdmin}) => {
 
   const fetchUser = useCallback(async () => {
     try {
-      const fetched = await request(`/api/user/${userId}`, "GET", null, {
+      const fetched = await request(`/api/user/${userIds}`, "GET", null, {
         Authorization: `Bearer ${token}`,
       });
       setUser(fetched);
     } catch (e) {}
-  }, [token, request, userId]);
+  }, [token, request, userIds]);
 
-  const fetchTests = useCallback(async () => {
-    try {
-      const fetched = await request(`/api/answers/of/${userId}`, "GET", null, {
-        Authorization: `Bearer ${token}`,
-      });
-      console.log(fetched)
-      setTests(fetched);
-    } catch (e) {}
-  }, [token, request, userId]);
-
-  useEffect(() => {
-    fetchTests();
-  }, [fetchTests]);
+  const fetchTests = useCallback(
+    async (id = userIds) => {
+      try {
+        const fetched = await request(`/api/answers/of/${id}`, "GET", null, {
+          Authorization: `Bearer ${token}`,
+        });
+        setTests(fetched);
+      } catch (e) {}
+    },
+    [token, request, userIds]
+  );
 
   useEffect(() => {
-    if(isMe){
-      fetchMe();
+    if (isMe) {
+      fetchTests(userId);
+    } else {
+      fetchTests();
     }
-    else{
+  }, [fetchTests, isMe, userId]);
+
+  useEffect(() => {
+    if (isMe) {
+      fetchMe();
+    } else {
       fetchUser();
     }
   }, [fetchUser, fetchMe, isMe]);
@@ -59,7 +63,11 @@ const ProfileSetting = ({isMe, isAdmin}) => {
   }
 
   return (
-    <div>{!loading && user && <ProfileForm user={user} isMe={isMe} tests={tests} isAdmin={isAdmin} />}</div>
+    <div>
+      {!loading && user && (
+        <ProfileForm user={user} isMe={isMe} tests={tests} isPcych={isPcych} isAdmin={isAdmin} />
+      )}
+    </div>
   );
 };
 
