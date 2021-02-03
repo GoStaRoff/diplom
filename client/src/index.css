@@ -202,6 +202,11 @@
   border-top: 3px solid wheat;
 }
 
+.test-image{
+  max-width: 400px;
+  max-height: 400px;
+}
+
 .delete-btn {
   margin-top: 15px;
   height: 45px;

@@ -7,6 +7,7 @@ import TestList from "./pages/test-list";
 import UserList from "./pages/user-list";
 import TestPage from "./pages/test-page";
 import AuthForm from "./pages/auth-form";
+import ImageTest from "./pages/image-test";
 import Header from "./components/header";
 
 export const useRoutes = (userType) => {
@@ -16,8 +17,11 @@ export const useRoutes = (userType) => {
         <div className="image">
           <Header userType={userType} />
           <Switch>
-            <Route path="/profile" exact>
+          <Route path="/profile" exact>
               <ProfileSetting isMe isAdmin />
+            </Route>
+            <Route path="/image" exact>
+              <ImageTest />
             </Route>
             <Route path="/testlist" exact>
               <TestList isAdmin isDelete />
