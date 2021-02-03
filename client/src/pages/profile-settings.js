@@ -33,9 +33,10 @@ const ProfileSetting = ({isMe, isAdmin}) => {
 
   const fetchTests = useCallback(async () => {
     try {
-      const fetched = await request(`/api/test/of/${userId}`, "GET", null, {
+      const fetched = await request(`/api/answers/of/${userId}`, "GET", null, {
         Authorization: `Bearer ${token}`,
       });
+      console.log(fetched)
       setTests(fetched);
     } catch (e) {}
   }, [token, request, userId]);

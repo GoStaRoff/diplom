@@ -191,12 +191,12 @@ export const ProfileForm = ({ user, tests, isAdmin, isMe }) => {
       </div>
       <div className="col s12 m8 completed-tests">
         <h4>Історія тестів</h4>
-        {tests.map((test) => {
+        {tests.map((test, testIndex) => {
           return (
-            <div className="test" key={test._id}>
-              <p>{test.to}</p>
-              <a target="_blank" rel="noopener noreferrer" href={test.from}>
-                {test.from}
+            <div className="test" key={testIndex}>
+              <p>Hello</p>
+              <a target="_blank" rel="noopener noreferrer" href='/'>
+                World
               </a>
             </div>
           );
