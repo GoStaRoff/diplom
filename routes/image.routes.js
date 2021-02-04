@@ -24,7 +24,7 @@ router.post("/upload" ,async (req, res) => {
   });
 });
 
-router.get("/download/:imgName", auth, async (req, res) => {
+router.get("/download/:imgName", async (req, res) => {
   try {
     res.statusCode = 200;
 

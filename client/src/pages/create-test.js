@@ -6,6 +6,7 @@ import { useMessage } from "../hooks/message.hook";
 import "./create-test.css";
 
 const CreateTest = () => {
+  const axios = require("axios");
   const message = useMessage();
   const history = useHistory();
   const auth = useContext(AuthContext);
@@ -13,8 +14,28 @@ const CreateTest = () => {
   const [testName, setTestName] = useState("");
   const [testDescription, setTestDescription] = useState("");
   const [isTest, setIsTest] = useState(false);
-  const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState([]);
+  const [questions, setQuestions] = useState([
+    "Question example1?",
+    "Question example2?",
+    "Question example3?",
+  ]);
+  const [answers, setAnswers] = useState([
+    [
+      { answer: "Answer example11", status: true },
+      { answer: "Answer example12", status: false },
+      { answer: "Answer example13", status: false },
+    ],
+    [
+      { answer: "Answer example2", status: false },
+      { answer: "Answer example2", status: true },
+      { answer: "Answer example2", status: false },
+    ],
+    [
+      { answer: "Answer example31", status: false },
+      { answer: "Answer example32", status: false },
+      { answer: "Answer example33", status: true },
+    ],
+  ]);
 
   const typeHandler = (_isTest) => {
     setIsTest(_isTest);
@@ -52,6 +73,28 @@ const CreateTest = () => {
       (answer, index) => index !== answerIndex
     );
     setAnswers(newAnswers);
+  };
+
+  const changeAnswerImage = async (event, questionIndex, answerIndex) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("myImage", event.target.files[0]);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    let imageName = null;
+    await axios
+      .post("/image/upload", formData, config)
+      .then((response) => (imageName = response.data.message))
+      .catch((error) => alert(error.response.data.message));
+    if (imageName) {
+      let newAnswers = [...answers];
+      newAnswers[questionIndex][answerIndex].image = imageName;
+      console.log(newAnswers);
+      setAnswers(newAnswers);
+    }
   };
 
   const createTest = async () => {
@@ -285,11 +328,25 @@ const CreateTest = () => {
                           <i className="material-icons">close</i>
                         </button>
                         <div className="file-field input-field answer-image">
-                          <div className="btn" >
+                          <div className="btn">
                             <i className="material-icons">image</i>
-                            <input type="file" accept=".png, .jpg, .jpeg" />
+                            <input
+                              type="file"
+                              name="myImage"
+                              onChange={(event) => {
+                                changeAnswerImage(
+                                  event,
+                                  questionIndex,
+                                  answerIndex
+                                );
+                              }}
+                              accept=".png, .jpg, .jpeg"
+                            />
                           </div>
-                          <div className="file-path-wrapper" style={{width:'100px'}}>
+                          <div
+                            className="file-path-wrapper"
+                            style={{ width: "100px" }}
+                          >
                             <input className="file-path validate" type="text" />
                           </div>
                         </div>

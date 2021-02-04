@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 const axios = require("axios");
 
 const ImageTest = () => {
-  const [file, setFile] = useState(null);
   const onChange = async (e) => {
     e.preventDefault();
     const formData = new FormData();

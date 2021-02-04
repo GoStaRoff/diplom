@@ -47,7 +47,7 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
         }
       );
       message(data.message);
-      history.push("/profile")
+      history.push("/profile");
     } catch (e) {
       message(e);
     }
@@ -91,6 +91,13 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
                       }`}
                     >
                       {completedAnswers[questionIndex][answerIndex].answer}
+                      {answer.image && (
+                        <img
+                          className="answer-image"
+                          alt=" "
+                          src={`http://localhost:5000/image/download/${answer.image}`}
+                        />
+                      )}
                     </div>
                   );
                 } else {
@@ -110,6 +117,13 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
                         />
                         <span>{answer.answer}</span>
                       </label>
+                      {answer.image && (
+                        <img
+                          className="answer-image"
+                          alt=" "
+                          src={`http://localhost:5000/image/download/${answer.image}`}
+                        />
+                      )}
                     </div>
                   );
                 }
