@@ -9,6 +9,7 @@ app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/user", require("./routes/user.routes"));
 app.use("/api/test", require("./routes/test.routes"));
 app.use("/api/answers", require("./routes/answer.routes"));
+app.use("/image", require("./routes/image.routes"));
 
 const PORT = config.get("port") || 5000;
 

@@ -1,56 +1,32 @@
 import React, { useState } from "react";
+const axios = require("axios");
 
 const ImageTest = () => {
-  const [test, setTest] = useState({
-    name: "IMAGETEST",
-    description: "IMAGETEST",
-    owner: "SOMEONE",
-    isTest: true,
-    subscribesList: [],
-    questionsList: ["hi", "hi", "hi"],
-    answersList: [
-      [
-        { answer: "ans", status: false },
-        { answer: "ans", status: false },
-        { answer: "ans", status: false },
-      ],
-      [
-        { answer: "ans", status: false },
-        { answer: "ans", status: false },
-        { answer: "ans", status: false },
-      ],
-      [
-        { answer: "ans", status: false },
-        { answer: "ans", status: false },
-        { answer: "ans", status: false },
-      ],
-    ],
-  });
-
-  const [image, setImage] = useState(null);
-  const changeHandler = (event) => {
-    setImage(URL.createObjectURL(event.target.files[0]));
-    let newTest = test;
-    newTest.answersList[0][0].img = event.target.files[0];
-    setTest(newTest)
+  const [file, setFile] = useState(null);
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("myImage", file);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    await axios
+      .post("/image/upload", formData, config)
+      .then((response) => alert(response.data.message))
+      .catch((error) => alert(error.response.data.message));
   };
+  const onChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   return (
-    <div>
-      <div className="file-field input-field">
-        <div className="btn">
-          <i className="material-icons">image</i>
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            onChange={changeHandler}
-          />
-        </div>
-        <div className="file-path-wrapper">
-          <input className="file-path validate" type="text" />
-        </div>
-      </div>
-      <img className="test-image" src={image} alt="alt" />
-    </div>
+    <form onSubmit={onFormSubmit}>
+      <h1>File Upload</h1>
+      <input type="file" name="myImage" onChange={onChange} />
+      <button type="submit">Upload</button>
+    </form>
   );
 };
 
