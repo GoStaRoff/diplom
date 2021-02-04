@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const path = require("path");
 const multer = require("multer");
+const auth = require("../middleware/auth.middleware");
 
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
@@ -11,19 +12,33 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 },
+  limits: { fileSize: 10000000 },
 }).single("myImage");
 
 const router = Router();
 
-router.post(
-  "/upload",
-  async (req, res) => {
-    upload(req, res, (err) => {
-        if (!err) return res.status(200).json({ message: req.file.filename});
-        else return res.status(500).json({ message: "Щось пішло не так : " + err})
-      })
+router.post("/upload" ,async (req, res) => {
+  upload(req, res, (err) => {
+    if (!err) return res.status(200).json({ message: req.file.filename });
+    else return res.status(500).json({ message: "Щось пішло не так : " + err });
+  });
+});
+
+router.get("/download/:imgName", auth, async (req, res) => {
+  try {
+    res.statusCode = 200;
+
+    res.setHeader("Content-Type", "image/jpeg");
+
+    require("fs").readFile(
+      `./public/uploads/${req.params.imgName}`,
+      (err, image) => {
+        res.end(image);
+      }
+    );
+  } catch (e) {
+    res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });
   }
-);
+});
 
 module.exports = router;

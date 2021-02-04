@@ -3,10 +3,10 @@ const axios = require("axios");
 
 const ImageTest = () => {
   const [file, setFile] = useState(null);
-  const onFormSubmit = async (e) => {
+  const onChange = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("myImage", file);
+    formData.append("myImage", e.target.files[0]);
     const config = {
       headers: {
         "content-type": "multipart/form-data",
@@ -17,14 +17,19 @@ const ImageTest = () => {
       .then((response) => alert(response.data.message))
       .catch((error) => alert(error.response.data.message));
   };
-  const onChange = (e) => {
-    setFile(e.target.files[0]);
-  };
 
   return (
-    <form onSubmit={onFormSubmit}>
+    <form >
       <h1>File Upload</h1>
-      <input type="file" name="myImage" onChange={onChange} />
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>File</span>
+          <input type="file" name="myImage" onChange={onChange} />
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" />
+        </div>
+      </div>
       <button type="submit">Upload</button>
     </form>
   );
