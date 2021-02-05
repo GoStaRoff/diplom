@@ -41,7 +41,12 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
       const data = await request(
         "/api/answers/add",
         "POST",
-        { testId: test._id, userId: auth.userId, answersList: userAnswers },
+        {
+          testId: test._id,
+          userId: auth.userId,
+          answersList: userAnswers,
+          isTest: test.isTest,
+        },
         {
           Authorization: `Bearer ${auth.token}`,
         }
@@ -57,6 +62,15 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
     <div className="row page-card">
       <div className="test-info">
         <h4>{test.name}</h4>
+        {test.image && (
+          <div style={{ textAlign: "center" }}>
+            <img
+              className="question-image"
+              alt=" "
+              src={`http://localhost:5000/image/download/${test.image}`}
+            />
+          </div>
+        )}
         <p>Опис : {test.description}</p>
         <span>
           Тип тесту :{" "}
@@ -64,6 +78,7 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
             ? "Вірних відповідей не існує"
             : "Одна правильна відповідь на запитання"}
         </span>
+        {!test.isTest && isCheck && <p>Результат : {completedAnswers.result}</p>}
       </div>
       <div className="questions">
         {test.questionsList.map((question, questionIndex) => {
@@ -71,10 +86,9 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
             <div className="question" key={question.question + questionIndex}>
               <div className="question-text">
                 <h5>
-                  {questionIndex + 1}.{" "}
-                  {question.question}
+                  {questionIndex + 1}. {question.question}
                   {question.image && (
-                    <div style={{textAlign:"center"}}>
+                    <div style={{ textAlign: "center" }}>
                       <img
                         className="question-image"
                         alt=" "
@@ -91,17 +105,17 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
                     <div
                       key={answer + question + answerIndex + questionIndex}
                       className={`check-answer ${
-                        completedAnswers[questionIndex][answerIndex].userSelect
+                        completedAnswers.answersList[questionIndex][answerIndex].userSelect
                           ? "user-selected"
                           : ""
                       } ${
                         !test.isTest &&
-                        (completedAnswers[questionIndex][answerIndex].status
+                        (completedAnswers.answersList[questionIndex][answerIndex].status
                           ? "correct"
                           : "uncorrect")
                       }`}
                     >
-                      {completedAnswers[questionIndex][answerIndex].answer}
+                      {completedAnswers.answersList[questionIndex][answerIndex].answer}
                       {answer.image && (
                         <img
                           className="answer-image"

@@ -308,3 +308,8 @@
   max-width: 400px;
   max-height: 300px;
 }
+
+.test-image img {
+  width: 100%;
+  max-height: 200px;
+}

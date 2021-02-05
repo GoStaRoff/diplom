@@ -13,7 +13,7 @@ export const TestsList = ({ tests, isAdmin, isDelete, update }) => {
   const history = useHistory();
   if (!tests.length) {
     return <p className="center">isEmpty</p>;
-  } 
+  }
 
   const deleteTest = async (testId) => {
     try {
@@ -53,8 +53,13 @@ export const TestsList = ({ tests, isAdmin, isDelete, update }) => {
         {tests.map((test, testIndex) => {
           return (
             <div className="card" key={testIndex}>
-              <div className="card-image">
-                <img src={testPen} alt="testPen" />
+              <div className="card-image test-image">
+                {(test.image && (
+                  <img
+                    src={`http://localhost:5000/image/download/${test.image}`}
+                    alt="testImage"
+                  />
+                )) || <img src={testPen} alt="testImage" />}
               </div>
               <div className="card-content">
                 <h5>{test.name}</h5>

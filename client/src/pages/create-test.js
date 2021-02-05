@@ -13,11 +13,12 @@ const CreateTest = () => {
   const { request } = useHttp();
   const [testName, setTestName] = useState("");
   const [testDescription, setTestDescription] = useState("");
+  const [testImage, setTestImage] = useState("");
   const [isTest, setIsTest] = useState(false);
   const [questions, setQuestions] = useState([
-    {question:"Question example1?"},
-    {question:"Question example2?"},
-    {question:"Question example3?"},
+    { question: "Question example1?" },
+    { question: "Question example2?" },
+    { question: "Question example3?" },
   ]);
   const [answers, setAnswers] = useState([
     [
@@ -75,6 +76,26 @@ const CreateTest = () => {
     setAnswers(newAnswers);
   };
 
+  const changeTestImage = async(event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("myImage", event.target.files[0]);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    let imageName = null;
+    await axios
+      .post("/image/upload", formData, config)
+      .then((response) => (imageName = response.data.message))
+      .catch((error) => alert(error.response.data.message));
+    if(imageName){
+      setTestImage(imageName);
+    }
+    console.log(testImage)
+  }
+
   const changeQuestionImage = async (event, questionIndex) => {
     event.preventDefault();
     const formData = new FormData();
@@ -88,7 +109,7 @@ const CreateTest = () => {
     await axios
       .post("/image/upload", formData, config)
       .then((response) => (imageName = response.data.message))
-      .catch((error) => alert(error.response.data.message)); 
+      .catch((error) => alert(error.response.data.message));
     if (imageName) {
       let newQuestions = [...questions];
       newQuestions[questionIndex].image = imageName;
@@ -168,12 +189,14 @@ const CreateTest = () => {
     const test = {
       name: testName,
       description: testDescription,
+      image: testImage,
       owner: "",
       isTest: isTest,
       subscribesList: [],
       questionsList: questions,
       answersList: answers,
     };
+    console.log(test)
     try {
       const data = await request(
         "/api/test/create",
@@ -248,6 +271,20 @@ const CreateTest = () => {
               ></textarea>
               <label htmlFor="textareaDescription">Опис тесту</label>
             </div>
+            <div className="file-field input-field">
+                      <div className="btn">
+                        <i className="material-icons">image</i>
+                        <input
+                          type="file"
+                          name="myImage"
+                          onChange={changeTestImage}
+                          accept=".png, .jpg, .jpeg"
+                        />
+                      </div>
+                      <div className="file-path-wrapper">
+                        <input className="file-path validate" type="text" />
+                      </div>
+                    </div>
             <div className="type-test">
               <span>Тип тесту : </span>
               <label>
@@ -280,8 +317,11 @@ const CreateTest = () => {
             <h4>Запитання</h4>
             {questions.map((question, questionIndex) => {
               return (
-                <div className="question" key={question.question + questionIndex}>
-                  <div className="question-text">
+                <div
+                  className="question"
+                  key={question.question + questionIndex}
+                >
+                  <div>
                     <h5>
                       {questionIndex + 1}.{" "}
                       <div className="input-field ">
@@ -311,9 +351,7 @@ const CreateTest = () => {
                           accept=".png, .jpg, .jpeg"
                         />
                       </div>
-                      <div
-                        className="file-path-wrapper"
-                      >
+                      <div className="file-path-wrapper">
                         <input className="file-path validate" type="text" />
                       </div>
                     </div>
@@ -381,9 +419,7 @@ const CreateTest = () => {
                               accept=".png, .jpg, .jpeg"
                             />
                           </div>
-                          <div
-                            className="file-path-wrapper"
-                          >
+                          <div className="file-path-wrapper">
                             <input className="file-path validate" type="text" />
                           </div>
                         </div>

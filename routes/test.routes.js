@@ -24,6 +24,9 @@ router.post("/create", auth, async (req, res) => {
       questionsList: from.questionsList,
       answersList: from.answersList,
     });
+    if(from.image.length>2){
+      test.image = from.image;
+    }
 
     await test.save();
     res.status(201).json({ test });

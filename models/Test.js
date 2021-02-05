@@ -2,6 +2,7 @@ const { Schema, model, Types } = require("mongoose");
 const schema = new Schema({
   name: { type: String, required: true },
   description : { type:String, default:"Опис"},
+  image: { type: String},
   isTest: { type: Boolean, required: true},
   owner: { type: Types.ObjectId, required: true , ref: "User"},
   questionsList: { type: Array, required: true },
