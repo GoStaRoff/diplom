@@ -68,10 +68,21 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
       <div className="questions">
         {test.questionsList.map((question, questionIndex) => {
           return (
-            <div className="question" key={question + questionIndex}>
+            <div className="question" key={question.question + questionIndex}>
               <div className="question-text">
                 <h5>
-                  {questionIndex + 1}.{" " + question}
+                  {questionIndex + 1}.{" "}
+                  {question.question}
+                  {question.image && (
+                    <div style={{textAlign:"center"}}>
+                      <img
+                        className="question-image"
+                        alt=" "
+                        src={`http://localhost:5000/image/download/${question.image}`}
+                      />
+                      <br />
+                    </div>
+                  )}
                 </h5>
               </div>
               {test.answersList[questionIndex].map((answer, answerIndex) => {

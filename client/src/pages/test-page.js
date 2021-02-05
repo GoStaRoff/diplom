@@ -24,7 +24,6 @@ const TestPage = ({ isCheck }) => {
 
   const fetchAnswers = useCallback(async () => {
     try {
-      console.log("111111111111111111111")
       const fetched = await request(
         `/api/answers`,
         "POST",
@@ -35,7 +34,6 @@ const TestPage = ({ isCheck }) => {
       );
       setAnswers(fetched);
     } catch (e) {
-      console.log(e)
     }
   }, [token, request, userId, testId]);
 

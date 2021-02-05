@@ -15,9 +15,9 @@ const CreateTest = () => {
   const [testDescription, setTestDescription] = useState("");
   const [isTest, setIsTest] = useState(false);
   const [questions, setQuestions] = useState([
-    "Question example1?",
-    "Question example2?",
-    "Question example3?",
+    {question:"Question example1?"},
+    {question:"Question example2?"},
+    {question:"Question example3?"},
   ]);
   const [answers, setAnswers] = useState([
     [
@@ -75,6 +75,27 @@ const CreateTest = () => {
     setAnswers(newAnswers);
   };
 
+  const changeQuestionImage = async (event, questionIndex) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("myImage", event.target.files[0]);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    let imageName = null;
+    await axios
+      .post("/image/upload", formData, config)
+      .then((response) => (imageName = response.data.message))
+      .catch((error) => alert(error.response.data.message)); 
+    if (imageName) {
+      let newQuestions = [...questions];
+      newQuestions[questionIndex].image = imageName;
+      setQuestions(newQuestions);
+    }
+  };
+
   const changeAnswerImage = async (event, questionIndex, answerIndex) => {
     event.preventDefault();
     const formData = new FormData();
@@ -92,7 +113,6 @@ const CreateTest = () => {
     if (imageName) {
       let newAnswers = [...answers];
       newAnswers[questionIndex][answerIndex].image = imageName;
-      console.log(newAnswers);
       setAnswers(newAnswers);
     }
   };
@@ -177,7 +197,7 @@ const CreateTest = () => {
 
   const changeQuestion = (event, questionIndex) => {
     let newQuestions = [...questions];
-    newQuestions[questionIndex] = event.target.value;
+    newQuestions[questionIndex].question = event.target.value;
     setQuestions(newQuestions);
   };
 
@@ -260,7 +280,7 @@ const CreateTest = () => {
             <h4>Запитання</h4>
             {questions.map((question, questionIndex) => {
               return (
-                <div className="question" key={question + questionIndex}>
+                <div className="question" key={question.question + questionIndex}>
                   <div className="question-text">
                     <h5>
                       {questionIndex + 1}.{" "}
@@ -269,7 +289,7 @@ const CreateTest = () => {
                           id={`question${questionIndex}`}
                           className="materialize-textarea"
                           data-length="3000"
-                          defaultValue={question}
+                          defaultValue={question.question}
                           onBlur={(event) => {
                             changeQuestion(event, questionIndex);
                           }}
@@ -279,6 +299,24 @@ const CreateTest = () => {
                         </label>
                       </div>
                     </h5>
+                    <div className="file-field input-field">
+                      <div className="btn">
+                        <i className="material-icons">image</i>
+                        <input
+                          type="file"
+                          name="myImage"
+                          onChange={(event) => {
+                            changeQuestionImage(event, questionIndex);
+                          }}
+                          accept=".png, .jpg, .jpeg"
+                        />
+                      </div>
+                      <div
+                        className="file-path-wrapper"
+                      >
+                        <input className="file-path validate" type="text" />
+                      </div>
+                    </div>
                   </div>
                   {answers[questionIndex].map((answer, answerIndex) => {
                     return (
@@ -345,7 +383,6 @@ const CreateTest = () => {
                           </div>
                           <div
                             className="file-path-wrapper"
-                            style={{ width: "100px" }}
                           >
                             <input className="file-path validate" type="text" />
                           </div>

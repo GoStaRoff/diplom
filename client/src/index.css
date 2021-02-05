@@ -27,8 +27,10 @@
   padding-left: 50px;
 }
 
-.card-action button {
-  margin-left: 100px;
+
+
+.card-action {
+  text-align: center;
 }
 
 .card-content h5 {
@@ -215,6 +217,14 @@
   padding: 0;
 }
 
+.question-text{
+  display: flex;
+  text-align: center;
+}
+.question-text h5{
+  width: 100%;
+}
+
 .answer-image{
   margin-left: 10px;
 }
@@ -293,3 +303,8 @@
   margin-left: auto;
 }
 
+.question-image{
+  
+  max-width: 400px;
+  max-height: 300px;
+}
