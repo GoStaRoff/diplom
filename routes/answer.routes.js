@@ -19,6 +19,9 @@ router.post("/add", auth, async (req, res) => {
         }
       }
     }
+    else{
+      // ПРОДОЛЖИТЬ ЛОГИКУ ПОДСЧЁТА РЕЗУЛЬТАТА ДЛЯ ТЕСТОВ С ГРУПАМИ И ЦЕНОЙ
+    }
     const existing = await Answers.findOne({ testId: testId, userId: userId });
     if (existing) {
       await Answers.findOneAndUpdate({ userId, testId }, { answersList, result: `${counter}/${answersList.length}` });
