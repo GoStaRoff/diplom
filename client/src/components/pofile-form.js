@@ -10,16 +10,15 @@ import psychologyPhoto from "../images/psychology.png";
 export const ProfileForm = ({ user, tests, isAdmin, isMe, isPcych }) => {
   const message = useMessage();
   const { loading, request } = useHttp();
-  const { token} = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const [form, setForm] = useState({
-    login: user.login,
+    kurs: user.kurs,
     email: user.email,
     password: "",
     userType: user.userType,
     surname: user.surname,
     name: user.name,
     patronymic: user.patronymic,
-    address: user.address,
     specialization: user.specialization,
     psychSubscribes: user.psychSubscribes,
     testAnswers: user.testAnswers,
@@ -84,18 +83,6 @@ export const ProfileForm = ({ user, tests, isAdmin, isMe, isPcych }) => {
         </div>
         <div className="input-field">
           <input
-            disabled={!isAdmin}
-            id="login"
-            name="login"
-            onChange={changeHandler}
-            type="text"
-            value={form.login}
-            className="validate"
-          />
-          <label htmlFor="login">Логін</label>
-        </div>
-        <div className="input-field">
-          <input
             disabled
             onChange={changeHandler}
             id="email"
@@ -117,6 +104,18 @@ export const ProfileForm = ({ user, tests, isAdmin, isMe, isPcych }) => {
             className="validate"
           />
           <label htmlFor="password">Пароль</label>
+        </div>
+        <div className="input-field">
+          <input
+            disabled={!isAdmin}
+            id="kurs"
+            name="kurs"
+            onChange={changeHandler}
+            type="text"
+            value={form.kurs}
+            className="validate"
+          />
+          <label htmlFor="kurs">Навчальний курс / ID</label>
         </div>
         <div className="input-field">
           <input
@@ -153,18 +152,6 @@ export const ProfileForm = ({ user, tests, isAdmin, isMe, isPcych }) => {
             className="validate"
           />
           <label htmlFor="patronymic">По-батькові</label>
-        </div>
-        <div className="input-field">
-          <input
-            disabled={!isAdmin}
-            onChange={changeHandler}
-            id="address"
-            name="address"
-            value={form.address}
-            type="text"
-            className="validate"
-          />
-          <label htmlFor="address">Адреса</label>
         </div>
         <div className="input-field">
           <input

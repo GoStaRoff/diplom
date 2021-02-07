@@ -1,9 +1,8 @@
 const { Router } = require("express");
 const Answers = require("../models/UserAnswer");
 const Test = require("../models/Test");
-const shortid = require("shortid");
+const User = require("../models/User");
 const auth = require("../middleware/auth.middleware");
-const config = require("config");
 const router = Router();
 
 // /api/answers/add
@@ -47,6 +46,20 @@ router.get("/of/:id", auth, async (req, res) => {
     res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });
   }
 });
+
+// /api/answers/test/:testId
+router.get("/test/:testId", auth, async (req, res) => {
+  try {
+    const answers = await Answers.find({testId: req.params.testId});
+    let users = Array(answers.length);
+    for (let i = 0; i < answers.length; i++) {
+      users[i] = await User.findById(answers[i].userId);
+    }
+    return res.json({answers,users})
+  } catch (e) {
+    res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });
+  }
+})
 
 // /api/answers
 router.post("/", auth, async (req, res) => {

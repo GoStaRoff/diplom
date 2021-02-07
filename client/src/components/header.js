@@ -19,8 +19,8 @@ const Header = (props) => {
         <nav>
           <div className="nav-wrapper">
             <NavLink className="brand-logo logo-text" to="/main">
-              <img style={{ height: "50px" }} alt="VITI" src={viti} />
-              MITI test
+              <img style={{ height: "75px" }} alt="VITI" src={viti} />
+              <p>MITI test</p>
             </NavLink>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li>

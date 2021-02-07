@@ -27,7 +27,10 @@ const ProfileSetting = ({ isMe, isAdmin, isPcych }) => {
         Authorization: `Bearer ${token}`,
       });
       setUser(fetched);
-    } catch (e) {}
+    } catch (e) {
+      console.log("reload");
+      window.location.reload();
+    }
   }, [token, request, userIds]);
 
   const fetchTests = useCallback(
@@ -65,7 +68,13 @@ const ProfileSetting = ({ isMe, isAdmin, isPcych }) => {
   return (
     <div>
       {!loading && user && (
-        <ProfileForm user={user} isMe={isMe} tests={tests} isPcych={isPcych} isAdmin={isAdmin} />
+        <ProfileForm
+          user={user}
+          isMe={isMe}
+          tests={tests}
+          isPcych={isPcych}
+          isAdmin={isAdmin}
+        />
       )}
     </div>
   );

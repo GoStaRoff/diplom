@@ -40,12 +40,11 @@ router.post("/change", auth, async (req, res) => {
     const {
       email,
       password,
-      login,
+      kurs,
       userType,
       surname,
       name,
       patronymic,
-      address,
       specialization,
     } = req.body;
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -53,12 +52,11 @@ router.post("/change", auth, async (req, res) => {
       await User.findOneAndUpdate(
         { email: email },
         {
-          login,
+          kurs,
           userType,
           surname,
           name,
           patronymic,
-          address,
           specialization,
         }
       );
@@ -70,12 +68,11 @@ router.post("/change", auth, async (req, res) => {
         { email: email },
         {
           password: hashedPassword,
-          login,
+          kurs,
           userType,
           surname,
           name,
           patronymic,
-          address,
           specialization,
         }
       );

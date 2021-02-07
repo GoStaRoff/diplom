@@ -40,7 +40,7 @@ export const UsersList =({ users, isAdmin, update }) => {
           <thead>
             <tr>
               <th>№</th>
-              <th>Логін</th>
+              <th>Навчальний курс / ID</th>
               <th>Пошта</th>
               <th>Тип користувача</th>
               {isAdmin && <th>Видалити</th>}
@@ -53,7 +53,7 @@ export const UsersList =({ users, isAdmin, update }) => {
               return (
                 <tr key={user._id}>
                   <td>{index + 1}</td>
-                  <td>{user.login}</td>
+                  <td>{user.kurs}</td>
                   <td>{user.email}</td>
                   <td>{user.userType}</td>
                   {isAdmin && (

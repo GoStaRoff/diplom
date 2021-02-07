@@ -12,15 +12,15 @@ const Footer = () => {
             <div className="col l6 s12">
               <h5 className="white-text">Військовий інститут телекомунікацій та інформатизації
 імені Героїв Крут</h5>
-              <p className="grey-text text-lighten-4">Якийсь текст про корисність цього сайту і що він з себе представляє.Якийсь текст про корисність цього сайту і що він з себе представляє.</p>
+              <p className="grey-text text-lighten-4">Дане онлайн тестування допоможе зрозуміти військовослужбовцям та кандидатам на навчання ВВНЗ сутність, психологічні особливості характеру, схильність до чого-небудь.  Також допоможуть визначити темперамент і тип особистості, від яких вже залежать рішення і поведінку в самих різних ситуаціях.</p>
             </div>
             <div className="col l4 offset-l2 s12">
               <h5 className="white-text">Контатки</h5>
-              <ul>
-                <li><a className="white-text text-lighten-3" target="_blank" without rel="noreferrer" href="https://www.facebook.com/viti.edu.ua"><img alt="logo" height="18px" src={face} />Facebook</a></li>
-                <li><a className="grey-text text-lighten-3" target="_blank" without rel="noreferrer" href="https:/instagram.com/viti_krut"><img alt="logo" height="18px" src={inst} />Instagram</a></li>
-                <li><a className="white-text text-lighten-3" target="_blank" without rel="noreferrer" href="https://www.youtube.com/channel/UCY3W3FOsHjcutQLPIjtq_9w"><img alt="logo" height="18px" src={yt} />YouTube</a></li>
-                <li><a className="white-text text-lighten-3" target="_blank" without rel="noreferrer" href="mailto:vitivstup@viti.edu.ua"><img alt="logo" height="18px" src={email} />vitivstup@viti.edu.ua</a></li>
+              <ul className="contacts">
+                <li><a className="white-text text-lighten-3" target="_blank" rel="noreferrer" href="https://www.facebook.com/viti.edu.ua"><img alt="logo" height="18px" src={face} />Facebook</a></li>
+                <li><a className="grey-text text-lighten-3" target="_blank" rel="noreferrer" href="https:/instagram.com/viti_krut"><img alt="logo" height="18px" src={inst} />Instagram</a></li>
+                <li><a className="white-text text-lighten-3" target="_blank" rel="noreferrer" href="https://www.youtube.com/channel/UCY3W3FOsHjcutQLPIjtq_9w"><img alt="logo" height="18px" src={yt} />YouTube</a></li>
+                <li><a className="white-text text-lighten-3" target="_blank" rel="noreferrer" href="mailto:vitivstup@viti.edu.ua"><img alt="logo" height="18px" src={email} />vitivstup@viti.edu.ua</a></li>
               </ul>
             </div>
           </div>

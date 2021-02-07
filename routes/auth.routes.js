@@ -24,7 +24,7 @@ router.post(
           message: "Неправильно введені дані",
         });
       }
-      const { email, password , login, surname, name, patronymic, address, specialization} = req.body;
+      const { email, password , kurs, surname, name, patronymic, specialization} = req.body;
       const candidate = await User.findOne({ email });
       if (candidate) {
         return res
@@ -32,7 +32,7 @@ router.post(
           .json({ message: "Користувач вже зареєстрований" });
       }
       const hashedPassword = await bcrypt.hash(password, 12);
-      await new User({ email, password: hashedPassword , login, surname, name, patronymic, address, specialization}).save();
+      await new User({ email, password: hashedPassword , kurs, surname, name, patronymic, specialization}).save();
 
       res.status(201).json({ message: "Користувач зареєстрований успішно." });
     } catch (error) {

@@ -13,11 +13,10 @@ const AuthForm = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    login: "",
+    kurs: "",
     surname: "",
     name: "",
     patronymic: "",
-    address: "",
     specialization: "",
   });
 
@@ -125,16 +124,6 @@ const AuthForm = () => {
                 <div>
                   <div className="input-field">
                     <input
-                      id="login"
-                      name="login"
-                      onChange={changeHandler}
-                      type="text"
-                      className="validate"
-                    />
-                    <label htmlFor="login">Логін</label>
-                  </div>
-                  <div className="input-field">
-                    <input
                       onChange={changeHandler}
                       id="surname"
                       name="surname"
@@ -142,6 +131,16 @@ const AuthForm = () => {
                       className="validate"
                     />
                     <label htmlFor="surname">Фамілія</label>
+                  </div>
+                  <div className="input-field">
+                    <input
+                      onChange={changeHandler}
+                      id="kurs"
+                      name="kurs"
+                      type="text"
+                      className="validate"
+                    />
+                    <label htmlFor="kurs">Навчальний курс / ID</label>
                   </div>
                   <div className="input-field">
                     <input
@@ -162,16 +161,6 @@ const AuthForm = () => {
                       className="validate"
                     />
                     <label htmlFor="patronymic">По-батькові</label>
-                  </div>
-                  <div className="input-field">
-                    <input
-                      onChange={changeHandler}
-                      id="address"
-                      name="address"
-                      type="text"
-                      className="validate"
-                    />
-                    <label htmlFor="address">Адреса</label>
                   </div>
                   <div className="input-field">
                     <input
