@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
+import viti from "../images/viti.png";
 
 const Header = (props) => {
   const history = useHistory();
@@ -18,7 +19,8 @@ const Header = (props) => {
         <nav>
           <div className="nav-wrapper">
             <NavLink className="brand-logo logo-text" to="/main">
-              Just test
+              <img style={{ height: "50px" }} alt="VITI" src={viti} />
+              MITI test
             </NavLink>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li>

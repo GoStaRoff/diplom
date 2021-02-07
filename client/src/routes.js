@@ -9,60 +9,70 @@ import TestPage from "./pages/test-page";
 import AuthForm from "./pages/auth-form";
 import ImageTest from "./pages/image-test";
 import Header from "./components/header";
+import Footer from "./components/footer";
 
 export const useRoutes = (userType) => {
   switch (userType) {
     case "admin":
       return (
-        <div className="image">
-          <Header userType={userType} />
-          <Switch>
-          <Route path="/profile" exact>
-              <ProfileSetting isMe isAdmin />
-            </Route>
-            <Route path="/image" exact>
-              <ImageTest />
-            </Route>
-            <Route path="/testlist" exact>
-              <TestList isAdmin isDelete />
-            </Route>
-            <Route path="/testlist/createtest" exact>
-              <CreateTest />
-            </Route>
-            <Route path="/tests/:testId" exact>
-              <TestPage />
-            </Route>
-            <Route path="/userlist/:id" exact>
-              <ProfileSetting isAdmin />
-            </Route>
-            <Route path="/userlist" exact>
-              <UserList isAdmin />
-            </Route>
-            <Route path="/main" exact>
-              <MainPage />
-            </Route>
-            <Redirect to="/profile" />
-          </Switch>
+        <div>
+          <div className="image" id="page-container">
+            <div id="content-wrap">
+              <Header userType={userType} />
+              <Switch>
+                <Route path="/profile" exact>
+                  <ProfileSetting isMe isAdmin />
+                </Route>
+                <Route path="/image" exact>
+                  <ImageTest />
+                </Route>
+                <Route path="/testlist" exact>
+                  <TestList isAdmin isDelete />
+                </Route>
+                <Route path="/testlist/createtest" exact>
+                  <CreateTest />
+                </Route>
+                <Route path="/tests/:testId" exact>
+                  <TestPage />
+                </Route>
+                <Route path="/userlist/:id" exact>
+                  <ProfileSetting isAdmin />
+                </Route>
+                <Route path="/userlist" exact>
+                  <UserList isAdmin />
+                </Route>
+                <Route path="/main" exact>
+                  <MainPage />
+                </Route>
+                <Redirect to="/profile" />
+              </Switch>
+            </div>
+            <Footer/>
+          </div>
         </div>
       );
     case "psychology":
       return (
-        <div className="image">
+        <div className="image" id="page-container">
+            <div id="content-wrap">
           <Header userType={userType} />
           <Switch>
-            <Route path="/profile" exact>
+          <Route path="/profile" exact>
               <ProfileSetting isMe isAdmin isPcych />
             </Route>
             <Route path="/testlist" exact>
-              <TestList isAdmin />
+              <TestList isAdmin isPcych />
             </Route>
             <Route path="/tests/:testId" exact>
               <TestPage />
             </Route>
             <Route path="/userlist/:id" exact>
-              <ProfileSetting isPcych/>
+              <ProfileSetting isPcych />
             </Route>
             <Route path="/userlist" exact>
+              <UserList />
+            </Route>
+            <Route path="/answers/:testId" exact>
               <UserList />
             </Route>
             <Route path="/testlist/createtest" exact>
@@ -76,11 +86,14 @@ export const useRoutes = (userType) => {
             </Route>
             <Redirect to="/profile" />
           </Switch>
+          </div>
+          <Footer />
         </div>
       );
     case "user":
       return (
-        <div className="image">
+        <div className="image" id="page-container">
+            <div id="content-wrap">
           <Header userType={userType} />
           <Switch>
             <Route path="/profile" exact>
@@ -97,15 +110,20 @@ export const useRoutes = (userType) => {
             </Route>
             <Redirect to="/profile" />
           </Switch>
+          </div>
+          <Footer />
         </div>
       );
     default:
       return (
         <Switch>
           <Route path="/" exact>
-            <div className="image">
+          <div className="image" id="page-container">
+            <div id="content-wrap">
               <Header userType={userType} />
               <MainPage />
+              </div>
+              <Footer />
             </div>
           </Route>
           <Route path="/login" exact>

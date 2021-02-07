@@ -6,7 +6,7 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 import Loader from "../components/loader";
 import testPen from "../images/testPen.jpg";
 
-export const TestsList = ({ tests, isAdmin, isDelete, update }) => {
+export const TestsList = ({ tests, isAdmin, isDelete, isPcych, update }) => {
   const message = useMessage();
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
@@ -83,6 +83,14 @@ export const TestsList = ({ tests, isAdmin, isDelete, update }) => {
                     }}
                   >
                     Видалити
+                  </Link>
+                )}
+                {isPcych && (
+                  <Link
+                    className="all-answers"
+                    to={`/answers/${test._id}`}
+                  >
+                    Усі відповіді
                   </Link>
                 )}
               </div>

@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth-context";
 import Loader from "../components/loader";
 import TestsList from "../components/test-list";
 
-const TestList = ({ isAdmin, isDelete }) => {
+const TestList = ({ isAdmin, isDelete, isPcych }) => {
   const [tests, setTests] = useState([]);
   const { loading, request } = useHttp();
   const { token } = useContext(AuthContext);
@@ -27,7 +27,7 @@ const TestList = ({ isAdmin, isDelete }) => {
     return <Loader />;
   }
 
-  return <>{!loading && <TestsList isAdmin={isAdmin} update={() => {fetchTests()}} tests={tests} isDelete={isDelete} />}</>;
+  return <>{!loading && <TestsList isPcych={isPcych} isAdmin={isAdmin} update={() => {fetchTests()}} tests={tests} isDelete={isDelete} />}</>;
 };
 
 export default TestList;
