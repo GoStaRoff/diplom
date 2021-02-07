@@ -52,7 +52,7 @@
   margin-left: 25px;
 }
 
-.all-answers{
+.all-answers {
   color: green !important;
   margin-left: 25px;
 }
@@ -77,7 +77,8 @@
 }
 
 .nav-wrapper ul li {
-  margin-left: 40px;
+  width: 200px;
+  text-align: center;
 }
 
 .cards,
@@ -255,9 +256,6 @@
   font-size: 28px;
 }
 
-.answer .input-field {
-  width: 50%;
-}
 
 .completed-test {
   width: 100%;
@@ -337,25 +335,38 @@ footer {
   height: 285px;
 }
 
-th,td{
+th,
+td {
   text-align: center;
 }
 
-tbody tr:last-child{
+tbody tr:last-child {
   border-bottom: none;
 }
 
-
-
-.logo-text>p, .logo-text{
+.logo-text > p,
+.logo-text {
   display: flex !important;
   margin: 0;
 }
-.contacts li a{
+.contacts li a {
   font-size: 16px !important;
 }
 
-.contacts li{
-  
+.contacts li {
   margin-top: 8px;
+}
+
+::placeholder {
+  color: rgba(0, 0, 0, 0.623);
+}
+
+.price{
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 60px !important;
+}
+
+.answer-field{
+  width: 800px;
 }

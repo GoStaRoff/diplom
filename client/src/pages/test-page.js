@@ -32,7 +32,6 @@ const TestPage = ({ isCheck }) => {
           Authorization: `Bearer ${token}`,
         }
       );
-      console.log(fetched)
       setAnswers(fetched);
     } catch (e) {
     }

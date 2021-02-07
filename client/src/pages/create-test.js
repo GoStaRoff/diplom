@@ -16,25 +16,43 @@ const CreateTest = () => {
   const [testImage, setTestImage] = useState("");
   const [isTest, setIsTest] = useState(false);
   const [questions, setQuestions] = useState([
-    { question: "Question example1?" },
-    { question: "Question example2?" },
-    { question: "Question example3?" },
+    { question: "Question example1?", group: "default" },
+    { question: "Question example2?", group: "default" },
+    { question: "Question example3?", group: "default" },{ question: "Question example1?", group: "default" },
+    { question: "Question example2?", group: "default" },
+    { question: "Question example3?", group: "default" },{ question: "Question example3?", group: "default" },
   ]);
   const [answers, setAnswers] = useState([
     [
-      { answer: "Answer example11", status: true },
-      { answer: "Answer example12", status: false },
-      { answer: "Answer example13", status: false },
+      { answer: "Answer example11", status: true, price: 0 },
+      { answer: "Answer example12", status: false, price: 0 },
+      { answer: "Answer example13", status: false, price: 0 },
     ],
     [
-      { answer: "Answer example2", status: false },
-      { answer: "Answer example2", status: true },
-      { answer: "Answer example2", status: false },
+      { answer: "Answer example2", status: false, price: 0 },
+      { answer: "Answer example2", status: true, price: 0 },
+      { answer: "Answer example2", status: false, price: 0 },
     ],
     [
-      { answer: "Answer example31", status: false },
-      { answer: "Answer example32", status: false },
-      { answer: "Answer example33", status: true },
+      { answer: "Answer example31", status: false, price: 0 },
+      { answer: "Answer example32", status: false, price: 0 },
+      { answer: "Answer example33", status: true, price: 0 },
+    ],[
+      { answer: "Answer example31", status: false, price: 0 },
+      { answer: "Answer example32", status: false, price: 0 },
+      { answer: "Answer example33", status: true, price: 0 },
+    ],[
+      { answer: "Answer example31", status: false, price: 0 },
+      { answer: "Answer example32", status: false, price: 0 },
+      { answer: "Answer example33", status: true, price: 0 },
+    ],[
+      { answer: "Answer example31", status: false, price: 0 },
+      { answer: "Answer example32", status: false, price: 0 },
+      { answer: "Answer example33", status: true, price: 0 },
+    ],[
+      { answer: "Answer example31", status: false, price: 0 },
+      { answer: "Answer example32", status: false, price: 0 },
+      { answer: "Answer example33", status: true, price: 0 },
     ],
   ]);
 
@@ -43,7 +61,7 @@ const CreateTest = () => {
   };
 
   const addQuestion = () => {
-    setQuestions([...questions, ""]);
+    setQuestions([...questions, { question: "", group: "default" }]);
     setAnswers([...answers, []]);
   };
 
@@ -76,7 +94,7 @@ const CreateTest = () => {
     setAnswers(newAnswers);
   };
 
-  const changeTestImage = async(event) => {
+  const changeTestImage = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("myImage", event.target.files[0]);
@@ -90,11 +108,10 @@ const CreateTest = () => {
       .post("/image/upload", formData, config)
       .then((response) => (imageName = response.data.message))
       .catch((error) => alert(error.response.data.message));
-    if(imageName){
+    if (imageName) {
       setTestImage(imageName);
     }
-    console.log(testImage)
-  }
+  };
 
   const changeQuestionImage = async (event, questionIndex) => {
     event.preventDefault();
@@ -196,7 +213,6 @@ const CreateTest = () => {
       questionsList: questions,
       answersList: answers,
     };
-    console.log(test)
     try {
       const data = await request(
         "/api/test/create",
@@ -207,6 +223,7 @@ const CreateTest = () => {
         }
       );
       history.push(`/testlist/${data.test._id}`);
+      message("Тест створено успішно")
     } catch (e) {}
   };
 
@@ -242,6 +259,26 @@ const CreateTest = () => {
     setAnswers(newAnswers);
   };
 
+  const changeGroup = (event, questionIndex) => {
+    let newQuestions = [...questions];
+    newQuestions[questionIndex].group = event.target.value;
+    setQuestions(newQuestions);
+  };
+
+  const changePrice = (event, questionIndex, answerIndex) => {
+    let price = Number(event.target.value);
+    let newAnswers = [...answers];
+    if(!price && price !== 0){
+      message("Введіть ціле число")
+      event.target.value = 0;
+      newAnswers[questionIndex][answerIndex].price = 0;
+      setAnswers(newAnswers);
+      return;
+    }
+    newAnswers[questionIndex][answerIndex].price = price;
+    setAnswers(newAnswers);
+  };
+
   useEffect(() => {
     window.M.updateTextFields();
   }, []);
@@ -272,19 +309,23 @@ const CreateTest = () => {
               <label htmlFor="textareaDescription">Опис тесту</label>
             </div>
             <div className="file-field input-field">
-                      <div className="btn">
-                        <i className="material-icons">image</i>
-                        <input
-                          type="file"
-                          name="myImage"
-                          onChange={changeTestImage}
-                          accept=".png, .jpg, .jpeg"
-                        />
-                      </div>
-                      <div className="file-path-wrapper">
-                        <input className="file-path validate" type="text" />
-                      </div>
-                    </div>
+              <div className="btn">
+                <i className="material-icons">image</i>
+                <input
+                  type="file"
+                  name="myImage"
+                  onChange={changeTestImage}
+                  accept=".png, .jpg, .jpeg"
+                />
+              </div>
+              <div className="file-path-wrapper">
+                <input
+                  className="file-path validate"
+                  placeholder="Картинка тесту"
+                  type="text"
+                />
+              </div>
+            </div>
             <div className="type-test">
               <span>Тип тесту : </span>
               <label>
@@ -309,7 +350,7 @@ const CreateTest = () => {
                     typeHandler(true);
                   }}
                 />
-                <span>Правильної відповіді немає</span>
+                <span>Груповий з ціною на відповідь</span>
               </label>
             </div>
           </div>
@@ -339,6 +380,21 @@ const CreateTest = () => {
                         </label>
                       </div>
                     </h5>
+                    {isTest && (
+                      <div className="input-field">
+                        <input
+                          id={`question${questionIndex}group`}
+                          onChange={(event) => {
+                            changeGroup(event, questionIndex);
+                          }}
+                          type="text"
+                          className="validate"
+                        />
+                        <label htmlFor={`question${questionIndex}group`}>
+                          Група
+                        </label>
+                      </div>
+                    )}
                     <div className="file-field input-field">
                       <div className="btn">
                         <i className="material-icons">image</i>
@@ -352,7 +408,11 @@ const CreateTest = () => {
                         />
                       </div>
                       <div className="file-path-wrapper">
-                        <input className="file-path validate" type="text" />
+                        <input
+                          className="file-path validate"
+                          placeholder="Картинка запитання"
+                          type="text"
+                        />
                       </div>
                     </div>
                   </div>
@@ -378,7 +438,7 @@ const CreateTest = () => {
                             <span></span>
                           </label>
                         )}
-                        <div className="input-field">
+                        <div className="input-field answer-field">
                           <textarea
                             id={`answer${questionIndex}${answerIndex}`}
                             className="materialize-textarea"
@@ -394,6 +454,24 @@ const CreateTest = () => {
                             Варіант відповіді
                           </label>
                         </div>
+                        {isTest && (
+                          <div className="input-field price">
+                            <input
+                              id={`answer${questionIndex}${answerIndex}group`}
+                              defaultValue="0"
+                              onChange={(event) => {
+                                changePrice(event, questionIndex, answerIndex);
+                              }}
+                              type="text"
+                              className="validate"
+                            />
+                            <label
+                              htmlFor={`answer${questionIndex}${answerIndex}group`}
+                            >
+                              Ціна
+                            </label>
+                          </div>
+                        )}
                         <button
                           className="btn waves-effect waves-light btn red delete-btn"
                           name="createTest"
@@ -420,7 +498,11 @@ const CreateTest = () => {
                             />
                           </div>
                           <div className="file-path-wrapper">
-                            <input className="file-path validate" type="text" />
+                            <input
+                              className="file-path validate"
+                              placeholder="Картинка"
+                              type="text"
+                            />
                           </div>
                         </div>
                       </div>

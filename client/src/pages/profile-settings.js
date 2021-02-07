@@ -28,8 +28,6 @@ const ProfileSetting = ({ isMe, isAdmin, isPcych }) => {
       });
       setUser(fetched);
     } catch (e) {
-      console.log("reload");
-      window.location.reload();
     }
   }, [token, request, userIds]);
 
