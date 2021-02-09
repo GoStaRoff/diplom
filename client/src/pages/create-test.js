@@ -24,7 +24,7 @@ const CreateTest = () => {
 
   const addQuestion = () => {
     setQuestions([...questions, { question: "", group: "Усього" }]);
-    setAnswers([...answers, [{ answer: "1", status: true },{ answer: "2", status: false },{ answer: "3", status: false },{ answer: "4", status: false },{ answer: "5", status: false },{ answer: "6", status: false }]]);
+    setAnswers([...answers, [{ answer: "повністю згоден, “Так”; ", status: true, price: 2 },{ answer: "скоріше “Так”, ніж “Ні”;  ", status: true, price: 1 },{ answer: "ні “Так”, ні “Ні”, щось середнє, “важко сказати”;", status: true, price: 0 },{ answer: " скоріше “Ні”, ніж “Так”;", status: true, price: -1 },{ answer: "повністю не згоден, “Ні”.", status: true, price: -2 },]]);
   };
 
   const deleteQuestion = (questionIndex) => {
@@ -420,7 +420,7 @@ const CreateTest = () => {
                           <div className="input-field price">
                             <input
                               id={`answer${questionIndex}${answerIndex}group`}
-                              defaultValue="0"
+                              defaultValue={answer.price}
                               onChange={(event) => {
                                 changePrice(event, questionIndex, answerIndex);
                               }}
