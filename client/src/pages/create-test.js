@@ -15,54 +15,16 @@ const CreateTest = () => {
   const [testDescription, setTestDescription] = useState("");
   const [testImage, setTestImage] = useState("");
   const [isTest, setIsTest] = useState(false);
-  const [questions, setQuestions] = useState([
-    { question: "Question example1?", group: "default" },
-    { question: "Question example2?", group: "default" },
-    { question: "Question example3?", group: "default" },{ question: "Question example1?", group: "default" },
-    { question: "Question example2?", group: "default" },
-    { question: "Question example3?", group: "default" },{ question: "Question example3?", group: "default" },
-  ]);
-  const [answers, setAnswers] = useState([
-    [
-      { answer: "Answer example11", status: true, price: 0 },
-      { answer: "Answer example12", status: false, price: 0 },
-      { answer: "Answer example13", status: false, price: 0 },
-    ],
-    [
-      { answer: "Answer example2", status: false, price: 0 },
-      { answer: "Answer example2", status: true, price: 0 },
-      { answer: "Answer example2", status: false, price: 0 },
-    ],
-    [
-      { answer: "Answer example31", status: false, price: 0 },
-      { answer: "Answer example32", status: false, price: 0 },
-      { answer: "Answer example33", status: true, price: 0 },
-    ],[
-      { answer: "Answer example31", status: false, price: 0 },
-      { answer: "Answer example32", status: false, price: 0 },
-      { answer: "Answer example33", status: true, price: 0 },
-    ],[
-      { answer: "Answer example31", status: false, price: 0 },
-      { answer: "Answer example32", status: false, price: 0 },
-      { answer: "Answer example33", status: true, price: 0 },
-    ],[
-      { answer: "Answer example31", status: false, price: 0 },
-      { answer: "Answer example32", status: false, price: 0 },
-      { answer: "Answer example33", status: true, price: 0 },
-    ],[
-      { answer: "Answer example31", status: false, price: 0 },
-      { answer: "Answer example32", status: false, price: 0 },
-      { answer: "Answer example33", status: true, price: 0 },
-    ],
-  ]);
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
 
   const typeHandler = (_isTest) => {
     setIsTest(_isTest);
   };
 
   const addQuestion = () => {
-    setQuestions([...questions, { question: "", group: "default" }]);
-    setAnswers([...answers, []]);
+    setQuestions([...questions, { question: "", group: "Усього" }]);
+    setAnswers([...answers, [{ answer: "1", status: true },{ answer: "2", status: false },{ answer: "3", status: false },{ answer: "4", status: false },{ answer: "5", status: false },{ answer: "6", status: false }]]);
   };
 
   const deleteQuestion = (questionIndex) => {
@@ -223,7 +185,7 @@ const CreateTest = () => {
         }
       );
       history.push(`/testlist/${data.test._id}`);
-      message("Тест створено успішно")
+      message("Тест створено успішно");
     } catch (e) {}
   };
 
@@ -268,8 +230,8 @@ const CreateTest = () => {
   const changePrice = (event, questionIndex, answerIndex) => {
     let price = Number(event.target.value);
     let newAnswers = [...answers];
-    if(!price && price !== 0){
-      message("Введіть ціле число")
+    if (!price && price !== 0) {
+      message("Введіть ціле число");
       event.target.value = 0;
       newAnswers[questionIndex][answerIndex].price = 0;
       setAnswers(newAnswers);

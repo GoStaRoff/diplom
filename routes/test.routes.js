@@ -92,8 +92,10 @@ router.post("/delete", auth, async (req, res) => {
     if (candidate) {
       await Test.findByIdAndDelete(testId);
       await Answers.deleteMany({ testId });
+      updateImages();
       return res.status(200).json({ message: "Тест видалено успішно" });
     } else {
+      updateImages();
       return res.status(404).json({ message: "Тест не знайдено" });
     }
   } catch (e) {
