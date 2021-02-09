@@ -45,6 +45,7 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
           testId: test._id,
           userId: auth.userId,
           answersList: userAnswers,
+          questionsList: test.questionsList,
           isTest: test.isTest,
         },
         {
@@ -78,7 +79,7 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
             ? "Вірних відповідей не існує"
             : "Одна правильна відповідь на запитання"}
         </span>
-        {!test.isTest && isCheck && <p>Результат : {completedAnswers.result}</p>}
+        { isCheck && <p>Результат : {completedAnswers.result}</p>}
       </div>
       <div className="questions">
         {test.questionsList.map((question, questionIndex) => {

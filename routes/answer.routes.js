@@ -8,9 +8,10 @@ const router = Router();
 // /api/answers/add
 router.post("/add", auth, async (req, res) => {
   try {
-    const { testId, userId, answersList, isTest } = req.body;
-    let counter = 0;
+    const { testId, userId, answersList, questionsList, isTest } = req.body;
+    let result;
     if (!isTest) {
+      let counter = 0;
       for (let i = 0; i < answersList.length; i++) {
         for (let j = 0; j < answersList[i].length; j++) {
           if (answersList[i][j].status && answersList[i][j].userSelect) {
@@ -18,16 +19,45 @@ router.post("/add", auth, async (req, res) => {
           }
         }
       }
-    }
-    else{
-      // ПРОДОЛЖИТЬ ЛОГИКУ ПОДСЧЁТА РЕЗУЛЬТАТА ДЛЯ ТЕСТОВ С ГРУПАМИ И ЦЕНОЙ
+      result = `${counter}/${answersList.length}`;
+    } else {
+      result = "";
+      let groups = [];
+      for (let i = 0; i < questionsList.length; i++) {
+        if (!groups.includes(questionsList[i].group)) {
+          groups.push(questionsList[i].group);
+        }
+      }
+      let counters = [];
+      for (let i = 0; i < groups.length; i++) {
+        counters[i] = 0;
+      }
+      for (let i = 0; i < questionsList.length; i++) {
+        for (let j = 0; j < answersList[i].length; j++) {
+          if (answersList[i][j].userSelect) {
+            counters[groups.indexOf(questionsList[i].group)] +=
+              answersList[i][j].price;
+          }
+        }
+      }
+      for (let i = 0; i < groups.length; i++) {
+        result += `${groups[i]}: ${counters[i]} балів\n`;
+      }
     }
     const existing = await Answers.findOne({ testId: testId, userId: userId });
     if (existing) {
-      await Answers.findOneAndUpdate({ userId, testId }, { answersList, result: `${counter}/${answersList.length}` });
+      await Answers.findOneAndUpdate(
+        { userId, testId },
+        { answersList, result: result }
+      );
       res.status(201).json({ message: "Відповіді успішно оновлені" });
     } else {
-      await new Answers({ testId, userId, answersList,result: `${counter}/${answersList.length}` }).save();
+      await new Answers({
+        testId,
+        userId,
+        answersList,
+        result: result,
+      }).save();
       res.status(201).json({ message: "Відповіді додані" });
     }
   } catch (e) {
@@ -53,16 +83,16 @@ router.get("/of/:id", auth, async (req, res) => {
 // /api/answers/test/:testId
 router.get("/test/:testId", auth, async (req, res) => {
   try {
-    const answers = await Answers.find({testId: req.params.testId});
+    const answers = await Answers.find({ testId: req.params.testId });
     let users = Array(answers.length);
     for (let i = 0; i < answers.length; i++) {
       users[i] = await User.findById(answers[i].userId);
     }
-    return res.json({answers,users})
+    return res.json({ answers, users });
   } catch (e) {
     res.status(500).json({ message: "Щось пішло не так. Помилка : " + e });
   }
-})
+});
 
 // /api/answers
 router.post("/", auth, async (req, res) => {
