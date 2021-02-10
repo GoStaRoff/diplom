@@ -23,8 +23,8 @@ const CreateTest = () => {
   };
 
   const addQuestion = () => {
-    setQuestions([...questions, { question: "", group: "Усього" }]);
-    setAnswers([...answers, [{ answer: "повністю згоден, “Так”; ", status: true, price: 2 },{ answer: "скоріше “Так”, ніж “Ні”;  ", status: true, price: 1 },{ answer: "ні “Так”, ні “Ні”, щось середнє, “важко сказати”;", status: true, price: 0 },{ answer: " скоріше “Ні”, ніж “Так”;", status: true, price: -1 },{ answer: "повністю не згоден, “Ні”.", status: true, price: -2 },]]);
+    setQuestions([...questions, { question: "", group: "Усього/Без групи" }]);
+    setAnswers([...answers, []]);
   };
 
   const deleteQuestion = (questionIndex) => {
