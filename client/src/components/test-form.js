@@ -72,14 +72,28 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
             />
           </div>
         )}
-        <p>Опис : {test.description}</p>
-        <span>
+        {!isCheck && (
+          <div>
+            <p>Інструкція : </p>
+            <p>{test.instruction}</p>
+          </div>
+        )}
+        {isCheck && (
+          <div>
+            <p>Опис : </p>
+            <p>{test.description}</p>
+          </div>
+        )}
+        
+        <p>
           Тип тесту :{" "}
-          {test.isTest
-            ? "Вірних відповідей не існує"
-            : "Одна правильна відповідь на запитання"}
-        </span>
-        { isCheck && <p>Результат : {completedAnswers.result}</p>}
+          <p>
+            {test.isTest
+              ? "Вірних відповідей не існує"
+              : "Одна правильна відповідь на запитання"}
+          </p>
+        </p>
+        {isCheck && <p>Результат : {completedAnswers.result}</p>}
       </div>
       <div className="questions">
         {test.questionsList.map((question, questionIndex) => {
@@ -106,17 +120,23 @@ const TestForm = ({ test, isCheck, completedAnswers }) => {
                     <div
                       key={answer + question + answerIndex + questionIndex}
                       className={`check-answer ${
-                        completedAnswers.answersList[questionIndex][answerIndex].userSelect
+                        completedAnswers.answersList[questionIndex][answerIndex]
+                          .userSelect
                           ? "user-selected"
                           : ""
                       } ${
                         !test.isTest &&
-                        (completedAnswers.answersList[questionIndex][answerIndex].status
+                        (completedAnswers.answersList[questionIndex][
+                          answerIndex
+                        ].status
                           ? "correct"
                           : "uncorrect")
                       }`}
                     >
-                      {completedAnswers.answersList[questionIndex][answerIndex].answer}
+                      {
+                        completedAnswers.answersList[questionIndex][answerIndex]
+                          .answer
+                      }
                       {answer.image && (
                         <img
                           className="answer-image"

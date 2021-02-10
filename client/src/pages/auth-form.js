@@ -122,16 +122,7 @@ const AuthForm = () => {
               </div>
               {!login && (
                 <div>
-                  <div className="input-field">
-                    <input
-                      onChange={changeHandler}
-                      id="surname"
-                      name="surname"
-                      type="text"
-                      className="validate"
-                    />
-                    <label htmlFor="surname">Фамілія</label>
-                  </div>
+                  
                   <div className="input-field">
                     <input
                       onChange={changeHandler}
@@ -141,6 +132,16 @@ const AuthForm = () => {
                       className="validate"
                     />
                     <label htmlFor="kurs">Навчальний курс / ID</label>
+                  </div>
+                  <div className="input-field">
+                    <input
+                      onChange={changeHandler}
+                      id="surname"
+                      name="surname"
+                      type="text"
+                      className="validate"
+                    />
+                    <label htmlFor="surname">Фамілія</label>
                   </div>
                   <div className="input-field">
                     <input

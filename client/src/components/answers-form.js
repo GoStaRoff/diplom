@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const AnswersForm = ({ answers, users }) => {
   if (!users.length) {
-    return <p className="center">isEmpty</p>;
+    return <p className="center">Записи відсутні</p>;
   }
 
   return (

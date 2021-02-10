@@ -12,7 +12,7 @@ export const TestsList = ({ tests, isAdmin, isDelete, isPcych, update }) => {
   const { token } = useContext(AuthContext);
   const history = useHistory();
   if (!tests.length) {
-    return <p className="center">isEmpty</p>;
+    return <p className="center">Записи відсутні</p>;
   }
 
   const deleteTest = async (testId) => {

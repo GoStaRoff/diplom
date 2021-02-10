@@ -11,7 +11,7 @@ export const UsersList =({ users, isAdmin, update }) => {
   const { token } = useContext(AuthContext);
   const history = useHistory();
   if (!users.length) {
-    return <p className="center">isEmpty</p>;
+    return <p className="center">Записи відсутні</p>;
   }
   
   const deleteUser = async (userId) => {

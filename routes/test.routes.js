@@ -47,6 +47,7 @@ router.post("/create", auth, async (req, res) => {
     const test = new Test({
       name: from.name,
       description: from.description,
+      instruction: from.instruction,
       isTest: from.isTest,
       owner: req.user.userId,
       questionsList: from.questionsList,

@@ -13,6 +13,7 @@ const CreateTest = () => {
   const { request } = useHttp();
   const [testName, setTestName] = useState("");
   const [testDescription, setTestDescription] = useState("");
+  const [testInstruction, setTestInstruction] = useState("");
   const [testImage, setTestImage] = useState("");
   const [isTest, setIsTest] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -126,6 +127,10 @@ const CreateTest = () => {
       message("Введіть опис теста");
       return;
     }
+    if (testInstruction.length < 1) {
+      message("Введіть опис теста");
+      return;
+    }
     if (questions.length < 1) {
       message("Створіть хоча б одне запитання");
       return;
@@ -168,6 +173,7 @@ const CreateTest = () => {
     const test = {
       name: testName,
       description: testDescription,
+      instruction: testInstruction,
       image: testImage,
       owner: "",
       isTest: isTest,
@@ -195,6 +201,10 @@ const CreateTest = () => {
 
   const changeDescription = (event) => {
     setTestDescription(event.target.value);
+  };
+
+  const changeInstruction = (event) => {
+    setTestInstruction(event.target.value);
   };
 
   const changeQuestion = (event, questionIndex) => {
@@ -269,6 +279,16 @@ const CreateTest = () => {
                 onChange={changeDescription}
               ></textarea>
               <label htmlFor="textareaDescription">Опис тесту</label>
+            </div>
+            <div className="input-field ">
+              <textarea
+                id="textareaInstruction"
+                className="materialize-textarea"
+                data-length="3000"
+                defaultValue={testInstruction}
+                onChange={changeInstruction}
+              ></textarea>
+              <label htmlFor="textareaDescription">Інструкція тесту</label>
             </div>
             <div className="file-field input-field">
               <div className="btn">
