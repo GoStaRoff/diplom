@@ -19,6 +19,7 @@ router.post("/add", auth, async (req, res) => {
           }
         }
       }
+     
       result = `${counter}/${answersList.length}`;
     } else {
       result = "";
@@ -34,12 +35,15 @@ router.post("/add", auth, async (req, res) => {
       }
       for (let i = 0; i < questionsList.length; i++) {
         for (let j = 0; j < answersList[i].length; j++) {
+          let index = groups.indexOf(questionsList[i].group);
           if (answersList[i][j].userSelect) {
-            counters[groups.indexOf(questionsList[i].group)] +=
+            if(!answersList[i][j].price) answersList[i][j].price= 0;
+            counters[index] +=
               answersList[i][j].price;
           }
         }
       }
+      console.log(counters[0])
       for (let i = 0; i < groups.length; i++) {
         result += `${groups[i]}: ${counters[i]} балів\n`;
       }
