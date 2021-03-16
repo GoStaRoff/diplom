@@ -10,7 +10,7 @@ import AuthForm from "./pages/auth-form";
 import ImageTest from "./pages/image-test";
 import Header from "./components/header";
 import Footer from "./components/footer";
-import AnswersPage from "./pages/answers-page"
+import AnswersPage from "./pages/answers-page"  
 
 export const useRoutes = (userType) => {
   switch (userType) {
